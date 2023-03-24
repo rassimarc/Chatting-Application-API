@@ -1,15 +1,15 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	
 	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=07ee6d69_002D52b8_002D4db5_002D9e8e_002D687d98a6f355/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="InMemoryProfileStoreTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Project Location="\Users\macbookpro\Downloads\COURSES SPRING 2023\EECE 503E\ProfileService_new\ProfileService.Web.IntegrationTests" Presentation="&amp;lt;ProfileService.Web.IntegrationTests&amp;gt;" /&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=07ee6d69_002D52b8_002D4db5_002D9e8e_002D687d98a6f355/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="InMemoryProfileStoreTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Project Location="\Users\macbookpro\Downloads\COURSES SPRING 2023\EECE 503E\ProfileService_new\ProfileService.Web.IntegrationTests" Presentation="&amp;lt;ProfileService.Web.IntegrationTests&amp;gt;" /&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1f3eb062_002D90a6_002D40ca_002D9379_002Dc1101034cc83/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;ProfileService.Web.Tests&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Project Location="\Users\personal\RiderProjects\ProfileService\ProfileService.Web.Tests" Presentation="&amp;lt;ProfileService.Web.Tests&amp;gt;" /&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1f3eb062_002D90a6_002D40ca_002D9379_002Dc1101034cc83/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from &amp;lt;ProfileService.Web.Tests&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Project Location="\Users\personal\RiderProjects\ProfileService\ProfileService.Web.Tests" Presentation="&amp;lt;ProfileService.Web.Tests&amp;gt;" /&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c7ceb48c_002Dd5b1_002D4d6b_002D80f1_002De578d207f01e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="AddProfile" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Or&gt;&#xD;
-    &lt;Project Location="\Users\macbookpro\Downloads\COURSES SPRING 2023\EECE 503E\ProfileService_new\ProfileService.Web.IntegrationTests" Presentation="&amp;lt;ProfileService.Web.IntegrationTests&amp;gt;" /&gt;&#xD;
-    &lt;Project Location="\Users\macbookpro\Downloads\COURSES SPRING 2023\EECE 503E\ProfileService_new\ProfileService.Web.Tests" Presentation="&amp;lt;ProfileService.Web.Tests&amp;gt;" /&gt;&#xD;
-  &lt;/Or&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c7ceb48c_002Dd5b1_002D4d6b_002D80f1_002De578d207f01e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="AddProfile" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Or&gt;
+    &lt;Project Location="\Users\macbookpro\Downloads\COURSES SPRING 2023\EECE 503E\ProfileService_new\ProfileService.Web.IntegrationTests" Presentation="&amp;lt;ProfileService.Web.IntegrationTests&amp;gt;" /&gt;
+    &lt;Project Location="\Users\macbookpro\Downloads\COURSES SPRING 2023\EECE 503E\ProfileService_new\ProfileService.Web.Tests" Presentation="&amp;lt;ProfileService.Web.Tests&amp;gt;" /&gt;
+  &lt;/Or&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
