@@ -3,9 +3,8 @@ using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 
 namespace ProfileService.Web.Dtos;
 
-public record Message(
-    [Required] Guid conversationId,
+public record SendMessageRequest(
     [Required] Guid messageId,
-    [Required] string text,
-    [Required] UnixDateTime time
-    );
+    [Required] string senderUsername, 
+    [Required] string text
+);
