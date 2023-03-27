@@ -5,5 +5,5 @@ using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 namespace ProfileService.Web.Dtos;
 
 public record SendMessageResponse(
-    [Required] UnixDateTime time
+    UnixDateTime time
 );
