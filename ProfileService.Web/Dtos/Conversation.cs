@@ -3,9 +3,7 @@ using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 
 namespace ProfileService.Web.Dtos;
 
-public record Conversation(
-    Guid conversationId,
-    Profile participant1,
-    Profile participant,
-    UnixDateTime modifiedTime
+public record ConversationRequest(
+    List<string> participants,
+    Message firstMessage
 );
