@@ -14,7 +14,6 @@ public class CosmosProfileStore : IProfileStore
         _cosmosClient = cosmosClient;
     }
 
-    // DRY
     private Container Container => _cosmosClient.GetDatabase("ContainerProfile").GetContainer("ContainerProfile");
     public async Task UpsertProfile(Profile profile)
     {

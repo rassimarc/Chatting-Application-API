@@ -115,7 +115,7 @@ public class ProfileControllerTests : IClassFixture<WebApplicationFactory<Progra
         var response = await _httpClient.PostAsync("/Profile",
             new StringContent(JsonConvert.SerializeObject(updatedProfile), Encoding.Default, "application/json"));
     
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         _profileStoreMock.Verify(mock => mock.UpsertProfile(updatedProfile), Times.Never);
     }
 

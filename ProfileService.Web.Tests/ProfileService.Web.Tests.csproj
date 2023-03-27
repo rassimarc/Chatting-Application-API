@@ -28,8 +28,4 @@
       <ProjectReference Include="..\ProfileService.Web\ProfileService.Web.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Storage" />
-    </ItemGroup>
-
 </Project>

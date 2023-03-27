@@ -34,6 +34,7 @@
     ".NETCoreApp,Version=v6.0": {
       "ProfileService.Web.IntegrationTests/1.0.0": {
         "dependencies": {
+          "Azure.Storage.Blobs": "12.15.0",
           "Microsoft.AspNetCore.Mvc.Testing": "6.0.13",
           "Microsoft.NET.Test.Sdk": "17.1.0",
           "ProfileService.Web": "1.0.0",
@@ -336,12 +337,10 @@
           "ProfileService.Web.IntegrationTests.dll": {}
         }
       },
-      "Azure.Core/1.19.0": {
+      "Azure.Core/1.28.0": {
         "dependencies": {
-          "Microsoft.Bcl.AsyncInterfaces": "1.0.0",
-          "System.Buffers": "4.5.1",
+          "Microsoft.Bcl.AsyncInterfaces": "1.1.1",
           "System.Diagnostics.DiagnosticSource": "6.0.0",
-          "System.Memory": "4.5.4",
           "System.Memory.Data": "1.0.2",
           "System.Numerics.Vectors": "4.5.0",
           "System.Text.Encodings.Web": "6.0.0",
@@ -349,13 +348,43 @@
           "System.Threading.Tasks.Extensions": "4.5.4"
         },
         "runtime": {
-          "lib/net5.0/Azure.Core.dll": {
-            "assemblyVersion": "1.19.0.0",
-            "fileVersion": "1.1900.21.45105"
+          "lib/net6.0/Azure.Core.dll": {
+            "assemblyVersion": "1.28.0.0",
+            "fileVersion": "1.2800.23.10602"
           }
         },
         "compile": {
-          "lib/net5.0/Azure.Core.dll": {}
+          "lib/net6.0/Azure.Core.dll": {}
+        }
+      },
+      "Azure.Storage.Blobs/12.15.0": {
+        "dependencies": {
+          "Azure.Storage.Common": "12.14.0",
+          "System.Text.Json": "6.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/Azure.Storage.Blobs.dll": {
+            "assemblyVersion": "12.15.0.0",
+            "fileVersion": "12.1500.23.12106"
+          }
+        },
+        "compile": {
+          "lib/net6.0/Azure.Storage.Blobs.dll": {}
+        }
+      },
+      "Azure.Storage.Common/12.14.0": {
+        "dependencies": {
+          "Azure.Core": "1.28.0",
+          "System.IO.Hashing": "6.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/Azure.Storage.Common.dll": {
+            "assemblyVersion": "12.14.0.0",
+            "fileVersion": "12.1400.23.12106"
+          }
+        },
+        "compile": {
+          "lib/net6.0/Azure.Storage.Common.dll": {}
         }
       },
       "coverlet.collector/3.1.2": {},
@@ -391,8 +420,8 @@
       },
       "Microsoft.Azure.Cosmos/3.31.2": {
         "dependencies": {
-          "Azure.Core": "1.19.0",
-          "Microsoft.Bcl.AsyncInterfaces": "1.0.0",
+          "Azure.Core": "1.28.0",
+          "Microsoft.Bcl.AsyncInterfaces": "1.1.1",
           "Microsoft.Bcl.HashCode": "1.1.0",
           "Newtonsoft.Json": "10.0.2",
           "System.Buffers": "4.5.1",
@@ -426,27 +455,27 @@
           "runtimes/win-x64/native/Cosmos.CRTCompat.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "2.0.0.0"
           },
           "runtimes/win-x64/native/Microsoft.Azure.Cosmos.ServiceInterop.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "2.14.0.0"
           },
           "runtimes/win-x64/native/msvcp140.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "14.30.30704.0"
           },
           "runtimes/win-x64/native/vcruntime140.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "14.30.30704.0"
           },
           "runtimes/win-x64/native/vcruntime140_1.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "14.30.30704.0"
           }
         },
         "compile": {
@@ -456,11 +485,11 @@
           "lib/netstandard2.0/Microsoft.Azure.Cosmos.Serialization.HybridRow.dll": {}
         }
       },
-      "Microsoft.Bcl.AsyncInterfaces/1.0.0": {
+      "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
         "runtime": {
           "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "assemblyVersion": "1.0.0.0",
-            "fileVersion": "4.700.19.46214"
+            "fileVersion": "4.700.20.21406"
           }
         },
         "compile": {
@@ -1471,6 +1500,17 @@
           "System.Runtime": "4.3.0"
         }
       },
+      "System.IO.Hashing/6.0.0": {
+        "runtime": {
+          "lib/net6.0/System.IO.Hashing.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.21.52210"
+          }
+        },
+        "compile": {
+          "lib/net6.0/System.IO.Hashing.dll": {}
+        }
+      },
       "System.IO.Pipelines/6.0.3": {
         "runtime": {
           "lib/net6.0/System.IO.Pipelines.dll": {
@@ -2005,7 +2045,7 @@
         "runtime": {
           "lib/netstandard2.0/xunit.abstractions.dll": {
             "assemblyVersion": "2.0.0.0",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "2.0.0.0"
           }
         },
         "compile": {
@@ -2066,6 +2106,7 @@
       "xunit.runner.visualstudio/2.4.3": {},
       "ProfileService.Web/1.0.0": {
         "dependencies": {
+          "Azure.Storage.Blobs": "12.15.0",
           "Microsoft.Azure.Cosmos": "3.31.2",
           "Swashbuckle.AspNetCore": "6.2.3"
         },
@@ -3812,12 +3853,26 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Azure.Core/1.19.0": {
+    "Azure.Core/1.28.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-lcDjG635DPE4fU5tqSueVMmzrx0QrIfPuY0+y6evHN5GanQ0GB+/4nuMHMmoNPwEow6OUPkJu4cZQxfHJQXPdA==",
-      "path": "azure.core/1.19.0",
-      "hashPath": "azure.core.1.19.0.nupkg.sha512"
+      "sha512": "sha512-IY6rGo8r8MfcmIxaNGFhIn/5PTz2Eld6Uqmy3bL/NX+2+g7hroo69jcJ9jeRPkuKXZPPreXTr8zt49No11Wbug==",
+      "path": "azure.core/1.28.0",
+      "hashPath": "azure.core.1.28.0.nupkg.sha512"
+    },
+    "Azure.Storage.Blobs/12.15.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-IclKNYNpJGtr8WY9284iJni9yMMoERscRb4Oxc+CF0U45mi749Dbpva1psc7u/R07fa+WgIupVIPczkfo2NQmA==",
+      "path": "azure.storage.blobs/12.15.0",
+      "hashPath": "azure.storage.blobs.12.15.0.nupkg.sha512"
+    },
+    "Azure.Storage.Common/12.14.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Fd6xg64hJy3NRBBcIijahJgUPyCv3qXaR61RqBnkTsDCywlVrdb8neulFJPd4smj2yvXogFdja0IteVKugr4nw==",
+      "path": "azure.storage.common/12.14.0",
+      "hashPath": "azure.storage.common.12.14.0.nupkg.sha512"
     },
     "coverlet.collector/3.1.2": {
       "type": "package",
@@ -3847,12 +3902,12 @@
       "path": "microsoft.azure.cosmos/3.31.2",
       "hashPath": "microsoft.azure.cosmos.3.31.2.nupkg.sha512"
     },
-    "Microsoft.Bcl.AsyncInterfaces/1.0.0": {
+    "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-K63Y4hORbBcKLWH5wnKgzyn7TOfYzevIEwIedQHBIkmkEBA9SCqgvom+XTuE+fAFGvINGkhFItaZ2dvMGdT5iw==",
-      "path": "microsoft.bcl.asyncinterfaces/1.0.0",
-      "hashPath": "microsoft.bcl.asyncinterfaces.1.0.0.nupkg.sha512"
+      "sha512": "sha512-yuvf07qFWFqtK3P/MRkEKLhn5r2UbSpVueRziSqj0yJQIKFwG1pq9mOayK3zE5qZCTs0CbrwL9M6R8VwqyGy2w==",
+      "path": "microsoft.bcl.asyncinterfaces/1.1.1",
+      "hashPath": "microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512"
     },
     "Microsoft.Bcl.HashCode/1.1.0": {
       "type": "package",
@@ -4469,6 +4524,13 @@
       "sha512": "sha512-6QOb2XFLch7bEc4lIcJH49nJN2HV+OC3fHDgsLVsBVBk3Y4hFAnOBGzJ2lUu7CyDDFo9IBWkSsnbkT6IBwwiMw==",
       "path": "system.io.filesystem.primitives/4.3.0",
       "hashPath": "system.io.filesystem.primitives.4.3.0.nupkg.sha512"
+    },
+    "System.IO.Hashing/6.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Rfm2jYCaUeGysFEZjDe7j1R4x6Z6BzumS/vUT5a1AA/AWJuGX71PoGB0RmpyX3VmrGqVnAwtfMn39OHR8Y/5+g==",
+      "path": "system.io.hashing/6.0.0",
+      "hashPath": "system.io.hashing.6.0.0.nupkg.sha512"
     },
     "System.IO.Pipelines/6.0.3": {
       "type": "package",

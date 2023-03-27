@@ -60,7 +60,6 @@ public class ImageController : ControllerBase
         var existingImage = await _imageStore.GetImage(guid.ToString());
         if (existingImage == null)
         {   
-            // This code returns a default picture if the guid is not available
             return NotFound("The image you are trying to download cannot be found. Please try another guid.");
         }
         
