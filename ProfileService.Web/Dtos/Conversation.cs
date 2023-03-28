@@ -4,7 +4,5 @@ namespace ProfileService.Web.Dtos;
 
 public record Conversation(
     Guid conversationId,
-    UnixDateTime lastModified,
-    
-    
-    );
+    UnixDateTime lastModified
+);

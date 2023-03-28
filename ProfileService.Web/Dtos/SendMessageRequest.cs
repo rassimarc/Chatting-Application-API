@@ -5,5 +5,6 @@ namespace ProfileService.Web.Dtos;
 
 public record SendMessageRequest(
     [Required] string senderUsername, 
-    [Required] string text
+    [Required] string text,
+    [Required] string messageId
 );

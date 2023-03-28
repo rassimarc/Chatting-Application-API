@@ -23,12 +23,12 @@ public class ConversationController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Profile>> AddConversation(ConversationRequest conversation)
+    public async Task<ActionResult<ConversationResponse>> AddConversation(ConversationRequest conversation)
     {
         var existingProfile1 = await _profileStore.GetProfile(conversation.participants[0]);
-        var existingpProfile2 = await _profileStore.GetProfile(conversation.participants[1]);
+        var existingProfile2 = await _profileStore.GetProfile(conversation.participants[1]);
         
-        if (existingProfile1 == null || existingpProfile2 ==null)
+        if (existingProfile1 == null || existingProfile2 ==null)
         {
             return Conflict($"A user with username {conversation.participants[0]}" +
                             $" or {conversation.participants[1]} doesn't exist");
@@ -52,12 +52,12 @@ public class ConversationController : ControllerBase
          TODO: Finish conversation DTO
          TODO: Add more tests to validate the conversation and messages
          */
-        return CreatedAtAction(nameof(GetProfile), new { conversationid = profile.username },
+        return CreatedAtAction(nameof(GetConversation), new { conversationId = conversationresponse.conversationId },
             conversationresponse);
     }
     
     [HttpGet("{username}")]
-    public async Task<ActionResult<Profile>> GetProfile(string username)
+    public async Task<ActionResult<Profile>> GetConversation(string username)
     {
         var profile = await _profileStore.GetProfile(username);
         if (profile == null)
