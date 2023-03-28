@@ -22,30 +22,25 @@ public class ConversationController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Profile>> UploadConversation(Profile profile)
+    public async Task<ActionResult<Profile>> UpsertConversation(ConversationRequest conversation)
     {
-        var existingConversation = await _profileStore.GetProfile(profile.username);
-        if (existingConversation != null)
-        {
-            return Conflict($"A user with username {profile.username} already exists");
-        }
-        var existingImage = await _imageStore.GetImage(profile.ProfilePictureId.ToString());
+        var existingProfile1 = await _profileStore.GetProfile(conversation.participants[0]);
+        var existingpProfile2 = await _profileStore.GetProfile(conversation.participants[1]);
+
         
-        if (existingImage == null)
+        if (existingProfile1 == null || existingpProfile2 ==null)
         {
-            Guid guid = new Guid("3f7c9a85-1825-499f-92fb-c46882afbea2");
-            var profile1 = new Profile(
-                profile.username,
-                profile.firstName,
-                profile.lastName,
-                guid
-            );
-            await _profileStore.UpsertProfile(profile1);
-            return NotFound("The image you are trying to put cannot be found," +
-                            " please try uploading it again and update your profile. " +
-                            "Default profile picture has been set.");
+            return Conflict($"A user with username {conversation.participants[0]}" +
+                            $" or {conversation.participants[1]} doesn't exist");
         }
-        await _profileStore.UpsertProfile(profile);
+        
+        var = new Profile(
+            profile.username,
+            profile.firstName,
+            profile.lastName,
+            guid
+        );
+        
         return CreatedAtAction(nameof(GetProfile), new { username = profile.username },
             profile);
     }

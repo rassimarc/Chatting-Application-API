@@ -4,6 +4,6 @@ namespace ProfileService.Web.Storage;
 
 public interface IConversationStore
 {
-    Task UploadConversation(ConversationRequest conversation);
+    Task UpsertConversation(ConversationRequest conversation);
     Task<ConversationRequest?> GetConversation(string conversationId);
 }
