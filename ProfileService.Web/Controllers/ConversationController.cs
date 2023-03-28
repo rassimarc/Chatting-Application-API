@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 using ProfileService.Web.Dtos;
 using ProfileService.Web.Storage;
 
@@ -22,27 +23,37 @@ public class ConversationController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Profile>> UpsertConversation(ConversationRequest conversation)
+    public async Task<ActionResult<Profile>> AddConversation(ConversationRequest conversation)
     {
         var existingProfile1 = await _profileStore.GetProfile(conversation.participants[0]);
         var existingpProfile2 = await _profileStore.GetProfile(conversation.participants[1]);
-
         
         if (existingProfile1 == null || existingpProfile2 ==null)
         {
             return Conflict($"A user with username {conversation.participants[0]}" +
                             $" or {conversation.participants[1]} doesn't exist");
         }
-        
-        var = new Profile(
-            profile.username,
-            profile.firstName,
-            profile.lastName,
-            guid
+
+        Guid messageId = new Guid();
+        UnixDateTime time = new UnixDateTime(); 
+        var message = new Message(
+            messageId,
+            conversation.firstMessage.senderUsername,
+            conversation.firstMessage.text,
+            time
         );
-        
-        return CreatedAtAction(nameof(GetProfile), new { username = profile.username },
-            profile);
+
+        var conversationresponse = new ConversationResponse(
+            messageId,
+            time
+        );
+        /*
+         TODO: Create a database and store conversation and message in the database (Give Priority)
+         TODO: Finish conversation DTO
+         TODO: Add more tests to validate the conversation and messages
+         */
+        return CreatedAtAction(nameof(GetProfile), new { conversationid = profile.username },
+            conversationresponse);
     }
     
     [HttpGet("{username}")]

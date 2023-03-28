@@ -1,6 +1,10 @@
-﻿namespace ProfileService.Web.Dtos;
+﻿using Microsoft.Azure.Cosmos.Serialization.HybridRow;
+
+namespace ProfileService.Web.Dtos;
 
 public record Conversation(
-    string username
+    Guid conversationId,
+    UnixDateTime lastModified,
+    
     
     );
