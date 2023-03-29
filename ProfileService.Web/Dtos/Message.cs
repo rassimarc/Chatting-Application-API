@@ -4,8 +4,8 @@ namespace ProfileService.Web.Dtos;
 
 public record Message(
     string messageId,
-    string conversationId,
+    Guid conversationId,
     string senderUsername,
     string text,
-    UnixDateTime time
+    long unixTime
 );
