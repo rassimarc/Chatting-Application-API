@@ -34,17 +34,18 @@ public class ConversationController : ControllerBase
                             $" or {conversation.participants[1]} doesn't exist");
         }
 
-        Guid messageId = new Guid();
+        Guid conversationId = new Guid();
         UnixDateTime time = new UnixDateTime(); 
         var message = new Message(
-            messageId,
+            conversation.firstMessage.messageId,
+            conversationId,
             conversation.firstMessage.senderUsername,
             conversation.firstMessage.text,
             time
         );
 
         var conversationresponse = new ConversationResponse(
-            messageId,
+            conversationId,
             time
         );
         /*
@@ -54,6 +55,36 @@ public class ConversationController : ControllerBase
          */
         return CreatedAtAction(nameof(GetConversation), new { conversationId = conversationresponse.conversationId },
             conversationresponse);
+    }
+    
+    [HttpPost("{conversationId}")]
+    public async Task<ActionResult<ConversationResponse>> AddMessage(SendMessageRequest message, Guid conversationId)
+    {
+        var existingProfile = await _profileStore.GetProfile(message.senderUsername);
+        
+        if (existingProfile == null)
+        {
+            return Conflict($"A user with username {message.senderUsername} doesn't exist");
+        }
+        
+        UnixDateTime time = new UnixDateTime(); 
+        var messageDB = new Message(
+            message.messageId,
+            conversationId,
+            message.senderUsername,
+            message.text,
+            time
+        );
+
+        var messageresponse = new SendMessageResponse(
+            time
+        );
+        /*
+         TODO: Message database
+         TODO: Correct return message
+         */
+        return CreatedAtAction(nameof(GetMessage), new { conversationId = conversationId },
+            messageresponse);
     }
     
     [HttpGet("{username}")]
