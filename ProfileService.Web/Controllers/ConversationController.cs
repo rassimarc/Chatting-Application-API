@@ -38,7 +38,7 @@ public class ConversationController : ControllerBase
         UnixDateTime time = new UnixDateTime(); 
         var message = new Message(
             conversation.firstMessage.messageId,
-            conversationId,
+            conversationId.ToString(),
             conversation.firstMessage.senderUsername,
             conversation.firstMessage.text,
             time
@@ -70,7 +70,7 @@ public class ConversationController : ControllerBase
         UnixDateTime time = new UnixDateTime(); 
         var messageDB = new Message(
             message.messageId,
-            conversationId,
+            conversationId.ToString(),
             message.senderUsername,
             message.text,
             time
@@ -83,7 +83,7 @@ public class ConversationController : ControllerBase
          TODO: Message database
          TODO: Correct return message
          */
-        return CreatedAtAction(nameof(GetMessage), new { conversationId = conversationId },
+        return CreatedAtAction(nameof(GetConversation), new { conversationId = conversationId },
             messageresponse);
     }
     
