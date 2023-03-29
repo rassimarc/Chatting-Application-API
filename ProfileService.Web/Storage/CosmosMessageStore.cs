@@ -80,7 +80,7 @@ public class CosmosMessageStore : IMessageStore
         return new MessageEntity(
             partitionKey: message.conversationId.ToString(),
             id: message.messageId.ToString(),
-            message.time.ToString(),
+            message.time.ToString(),    
             message.text,
             message.senderUsername
         );

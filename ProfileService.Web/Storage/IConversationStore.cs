@@ -4,6 +4,9 @@ namespace ProfileService.Web.Storage;
 
 public interface IConversationStore
 {
-    Task UpsertConversation(ConversationRequest conversation);
-    Task<ConversationRequest?> GetConversation(string conversationId);
+    Task UpsertConversation(Conversation conversation);
+    Task<Conversation?> GetConversation(string participant, string conversationId);
+    
+    Task DeleteConversation(string participant, string conversationId);
+
 }
