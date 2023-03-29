@@ -5,7 +5,6 @@ using ProfileService.Web.Dtos;
 using ProfileService.Web.Storage.Entities;
 
 namespace ProfileService.Web.Storage;
-
 public class CosmosMessageStore : IMessageStore
 {
     private readonly CosmosClient _cosmosClient;
@@ -95,7 +94,7 @@ public class CosmosMessageStore : IMessageStore
             entity.partitionKey,
             entity.senderUsername,
             entity.text,
-            dateTimeOffset.ToUnixTimeSeconds()
+            new UnixDateTime(dateTimeOffset.ToUnixTimeSeconds())
         );
     }
 }

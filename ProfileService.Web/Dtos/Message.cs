@@ -7,5 +7,5 @@ public record Message(
     string conversationId,
     string senderUsername,
     string text,
-    long time
+    UnixDateTime time
 );
