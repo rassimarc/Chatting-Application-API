@@ -1,5 +1,6 @@
 using System.Net;
 using Microsoft.Azure.Cosmos;
+using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 using ProfileService.Web.Dtos;
 using ProfileService.Web.Storage.Entities;
 
@@ -21,8 +22,8 @@ public class CosmosMessageStore : IMessageStore
             string.IsNullOrWhiteSpace(message.senderUsername) ||
             string.IsNullOrWhiteSpace(message.text) ||
             string.IsNullOrWhiteSpace(message.time.ToString()) ||
-            message.messageId == Guid.Empty ||
-            message.conversationId == Guid.Empty
+            string.IsNullOrWhiteSpace(message.messageId) ||
+            string.IsNullOrWhiteSpace(message.conversationId)
            )
         {
             throw new ArgumentException($"Invalid profile {message}", nameof(message));
@@ -31,19 +32,19 @@ public class CosmosMessageStore : IMessageStore
         await Container.UpsertItemAsync(ToEntity(message));
     }
 
-    public async Task<SendMessageResponse?> GetMessage(string messageId)
+    public async Task<Message?> GetMessage(string messageId, string conversationId)
     {
         try
         {
             var entity = await Container.ReadItemAsync<MessageEntity>(
                 id: messageId,
-                partitionKey: new PartitionKey(username),
+                partitionKey: new PartitionKey(conversationId),
                 new ItemRequestOptions
                 {
                     ConsistencyLevel = ConsistencyLevel.Session
                 }
             );
-            return ToProfile(entity);
+            return ToMessage(entity);
         }
         catch (CosmosException e)
         {
@@ -55,13 +56,13 @@ public class CosmosMessageStore : IMessageStore
         }
     }
 
-    public async Task DeleteProfile(string username)
+    public async Task DeleteMessage(string messageId, string conversationId)
     {
         try
         {
-            await Container.DeleteItemAsync<Profile>(
-                id: username,
-                partitionKey: new PartitionKey(username)
+            await Container.DeleteItemAsync<Message>(
+                id: messageId,
+                partitionKey: new PartitionKey(conversationId)
             );
         }
         catch (CosmosException e)
@@ -86,14 +87,15 @@ public class CosmosMessageStore : IMessageStore
         );
     }
 
-    private static Message ToProfile(MessageEntity entity)
+    private static Message ToMessage(MessageEntity entity)
     {
+        DateTimeOffset dateTimeOffset = DateTimeOffset.Parse(entity.time);
         return new Message(
-            messageId: new Guid(entity.id),
-            new Guid(entity.partitionKey),
+            messageId: entity.id,
+            entity.partitionKey,
             entity.senderUsername,
             entity.text,
-            entity.time
+            dateTimeOffset.ToUnixTimeSeconds()
         );
     }
 }

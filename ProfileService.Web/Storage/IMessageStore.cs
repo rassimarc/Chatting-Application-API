@@ -4,9 +4,9 @@ namespace ProfileService.Web.Storage;
 
 public interface IMessageStore
 {
-    Task UpsertMessage(SendMessageRequest message);
-    Task<SendMessageResponse?> GetMessage(string messageId);
+    Task UpsertMessage(Message message);
+    Task<Message?> GetMessage(string messageId, string conversationId);
     
-    Task DeleteMessage(string messageId);
+    Task DeleteMessage(string messageId, string conversationId);
 
 }
