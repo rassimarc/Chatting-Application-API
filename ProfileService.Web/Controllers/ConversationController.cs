@@ -38,7 +38,7 @@ public class ConversationController : ControllerBase
         UnixDateTime time = new UnixDateTime(); 
         var message = new Message(
             conversation.firstMessage.messageId,
-            conversationId.ToString(),
+            conversationId,
             conversation.firstMessage.senderUsername,
             conversation.firstMessage.text,
             time
