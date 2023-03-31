@@ -4,5 +4,5 @@ namespace ProfileService.Web.Dtos;
 
 public record ConversationResponse(
     Guid conversationId,
-    UnixDateTime createdUnixTime
+    long createdUnixTime
     );

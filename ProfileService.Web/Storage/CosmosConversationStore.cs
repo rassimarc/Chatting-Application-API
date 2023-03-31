@@ -17,11 +17,12 @@ public class CosmosConversationStore : IConversationStore
     private Container Container => _cosmosClient.GetDatabase("ContainerProfile").GetContainer("ContainerProfile");
     public async Task UpsertConversation(Conversation conversation)
     {
-        if (conversation == null ||
+        if (
+            conversation == null ||
             string.IsNullOrWhiteSpace(conversation.participants[0]) ||
             string.IsNullOrWhiteSpace(conversation.participants[1]) ||
-            string.IsNullOrWhiteSpace(conversation.lastModified.ToString())
-           )
+            conversation.lastModified == 0
+            ) 
         {
             throw new ArgumentException($"Invalid profile {conversation}", nameof(conversation));
         }
@@ -85,10 +86,9 @@ public class CosmosConversationStore : IConversationStore
 
     private static Conversation ToMessage(ConversationEntity entity)
     {
-        DateTimeOffset dateTimeOffset = DateTimeOffset.Parse(entity.lastModified);
         return new Conversation(
             conversationId: entity.id,
-             new UnixDateTime(dateTimeOffset.ToUnixTimeSeconds()),
+             long.Parse(entity.lastModified),
         new List<string> {entity.participants[0],entity.participants[1]}
         );
     }

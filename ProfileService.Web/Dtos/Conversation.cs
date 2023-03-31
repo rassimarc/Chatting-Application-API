@@ -4,6 +4,6 @@ namespace ProfileService.Web.Dtos;
 
 public record Conversation(
     string conversationId,
-    UnixDateTime lastModified,
+    long lastModified,
     List<string> participants
 );

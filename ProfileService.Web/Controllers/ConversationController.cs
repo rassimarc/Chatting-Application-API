@@ -34,8 +34,8 @@ public class ConversationController : ControllerBase
                             $" or {conversation.participants[1]} doesn't exist");
         }
 
+        long time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         Guid conversationId = new Guid();
-        UnixDateTime time = new UnixDateTime(); 
         var message = new Message(
             conversation.firstMessage.messageId,
             conversationId,
@@ -43,11 +43,12 @@ public class ConversationController : ControllerBase
             conversation.firstMessage.text,
             time
         );
-
+    
         var conversationresponse = new ConversationResponse(
             conversationId,
             time
         );
+        await _conversationStore.UpsertConversation();
         /*
          TODO: Create a database and store conversation and message in the database (Give Priority)
          TODO: Finish conversation DTO
@@ -66,11 +67,11 @@ public class ConversationController : ControllerBase
         {
             return Conflict($"A user with username {message.senderUsername} doesn't exist");
         }
-        
-        UnixDateTime time = new UnixDateTime(); 
+
+        long time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         var messageDB = new Message(
             message.messageId,
-            conversationId.ToString(),
+            conversationId,
             message.senderUsername,
             message.text,
             time
