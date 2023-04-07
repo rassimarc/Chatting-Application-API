@@ -43,12 +43,18 @@ public class ConversationController : ControllerBase
             conversation.firstMessage.text,
             time
         );
+
+        var conversationdb = new Conversation(
+            conversationId,
+            time,
+            conversation.participants
+        );
     
         var conversationresponse = new ConversationResponse(
             conversationId,
             time
         );
-        await _conversationStore.UpsertConversation();
+        await _conversationStore.UpsertConversation(conversationdb);
         /*
          TODO: Create a database and store conversation and message in the database (Give Priority)
          TODO: Finish conversation DTO
