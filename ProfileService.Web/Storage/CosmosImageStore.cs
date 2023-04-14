@@ -22,7 +22,6 @@ public class CosmosImageStore : IImageStore
         await Container.UpsertItemAsync(ToEntity(image));
     }
     
-
     public async Task<Image?> GetImage(string name)
     {
         try

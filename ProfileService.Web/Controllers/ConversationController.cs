@@ -28,7 +28,7 @@ public class ConversationController : ControllerBase
         var existingProfile1 = await _profileStore.GetProfile(conversation.participants[0]);
         var existingProfile2 = await _profileStore.GetProfile(conversation.participants[1]);
         
-        if (existingProfile1 == null || existingProfile2 ==null)
+        if (existingProfile1 == null || existingProfile2 == null)
         {
             return Conflict($"A user with username {conversation.participants[0]}" +
                             $" or {conversation.participants[1]} doesn't exist");
@@ -49,15 +49,12 @@ public class ConversationController : ControllerBase
             time,
             conversation.participants
         );
-    
         var conversationresponse = new ConversationResponse(
             conversationId,
             time
         );
         await _conversationStore.UpsertConversation(conversationdb);
         /*
-         TODO: Create a database and store conversation and message in the database (Give Priority)
-         TODO: Finish conversation DTO
          TODO: Add more tests to validate the conversation and messages
          */
         return CreatedAtAction(nameof(GetConversation), new { conversationId = conversationresponse.conversationId },
@@ -86,8 +83,8 @@ public class ConversationController : ControllerBase
         var messageresponse = new SendMessageResponse(
             time
         );
+        await _messageStore.UpsertMessage(messageDB);
         /*
-         TODO: Message database
          TODO: Correct return message
          */
         return CreatedAtAction(nameof(GetConversation), new { conversationId = conversationId },
@@ -95,9 +92,9 @@ public class ConversationController : ControllerBase
     }
     
     [HttpGet("{username}")]
-    public async Task<ActionResult<Profile>> GetConversation(string username)
+    public async Task<ActionResult<Profile>> GetConversation(string conversationId)
     {
-        var profile = await _profileStore.GetProfile(username);
+        var conversation = await _conversationStore.GetConversation(conversationId);
         if (profile == null)
         {
             return NotFound($"A User with username {username} was not found");

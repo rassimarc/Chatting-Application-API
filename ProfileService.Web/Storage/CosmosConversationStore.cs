@@ -26,23 +26,37 @@ public class CosmosConversationStore : IConversationStore
         {
             throw new ArgumentException($"Invalid profile {conversation}", nameof(conversation));
         }
-
-        await Container.UpsertItemAsync(ToEntity(conversation));
+        await Container.UpsertItemAsync(ToEntity(conversation, 0));
+        await Container.UpsertItemAsync(ToEntity(conversation, 1));
     }
 
-    public async Task<Conversation?> GetConversation(string participant, string conversationId)
+    public async Task<List<Conversation>?> GetConversations(string participant)
     {
         try
         {
-            var entity = await Container.ReadItemAsync<ConversationEntity>(
-                id: conversationId,
-                partitionKey: new PartitionKey(participant),
-                new ItemRequestOptions
+            List<Conversation> conversations= new List<Conversation>();
+            QueryRequestOptions requestOptions = new QueryRequestOptions
+            {
+                PartitionKey = new PartitionKey(participant)
+            };
+            QueryDefinition query = new QueryDefinition(
+                "SELECT * FROM c WHERE c.participants[0] = @participant OR c.participants[1] = @participant")
+                .WithParameter("@participant", participant);
+
+            FeedIterator<ConversationEntity> iterator = Container.GetItemQueryIterator<ConversationEntity>(
+                query,
+                requestOptions: new QueryRequestOptions { PartitionKey = new PartitionKey(participant) });
+
+            while (iterator.HasMoreResults)
+            {
+                FeedResponse<ConversationEntity> response = await iterator.ReadNextAsync();
+                foreach (ConversationEntity entity in response.Resource)
                 {
-                    ConsistencyLevel = ConsistencyLevel.Session
+                    conversations.Add(toConversation(entity));
                 }
-            );
-            return ToMessage(entity);
+            }
+
+            return conversations;
         }
         catch (CosmosException e)
         {
@@ -74,17 +88,17 @@ public class CosmosConversationStore : IConversationStore
         }
     }
 
-    private static ConversationEntity ToEntity(Conversation conversation)
+    private static ConversationEntity ToEntity(Conversation conversation, int participant)
     {
         return new ConversationEntity(
-            partitionKey: conversation.participants[0],
+            partitionKey: conversation.participants[participant],
             id: conversation.conversationId.ToString(),
             conversation.lastModified.ToString(),    
             conversation.participants
         );
     }
 
-    private static Conversation ToMessage(ConversationEntity entity)
+    private static Conversation toConversation(ConversationEntity entity)
     {
         return new Conversation(
             conversationId: new Guid(entity.id),
