@@ -14,7 +14,7 @@ public class CosmosMessageStore : IMessageStore
     }
 
     private Container Container => _cosmosClient.GetDatabase("ContainerProfile").GetContainer("ContainerProfile");
-    
+
     public async Task UpsertMessage(Message message)
     {
         if (message == null ||
@@ -30,8 +30,9 @@ public class CosmosMessageStore : IMessageStore
 
         await Container.UpsertItemAsync(ToEntity(message));
     }
-    
-    public async Task<List<Message?>> GetMessages(string conversationId)
+
+
+    public async Task<List<Message>?> GetMessages(string conversationId)
     {
         try
         {
@@ -63,30 +64,6 @@ public class CosmosMessageStore : IMessageStore
         }
     }
     
-    public async Task<Message?> GetMessage(string messageId, string conversationId)
-    {
-        try
-        {
-            var entity = await Container.ReadItemAsync<MessageEntity>(
-                id: messageId,
-                partitionKey: new PartitionKey(conversationId),
-                new ItemRequestOptions
-                {
-                    ConsistencyLevel = ConsistencyLevel.Session
-                }
-            );
-            return ToMessage(entity);
-        }
-        catch (CosmosException e)
-        {
-            if (e.StatusCode == HttpStatusCode.NotFound)
-            {
-                return null;
-            }
-            throw;
-        }
-    }
-
     public async Task DeleteMessage(string messageId, string conversationId)
     {
         try

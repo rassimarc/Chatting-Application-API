@@ -1,3 +1,4 @@
+using System.Threading.Tasks.Dataflow;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 using ProfileService.Web.Dtos;
@@ -57,7 +58,7 @@ public class ConversationController : ControllerBase
         /*
          TODO: Add more tests to validate the conversation and messages
          */
-        return CreatedAtAction(nameof(GetConversation), new { conversationId = conversationresponse.conversationId },
+        return CreatedAtAction(nameof(GetConversations), new { conversationId = conversationresponse.conversationId },
             conversationresponse);
     }
     
@@ -87,40 +88,29 @@ public class ConversationController : ControllerBase
         /*
          TODO: Correct return message
          */
-        return CreatedAtAction(nameof(GetConversation), new { conversationId = conversationId },
+        return CreatedAtAction(nameof(GetConversations), new { conversationId = conversationId },
             messageresponse);
     }
     
     [HttpGet("{username}")]
-    public async Task<ActionResult<Profile>> GetConversation(string conversationId)
+    public async Task<ActionResult<List<Conversation>?>> GetConversations(string username)
     {
-        var conversation = await _conversationStore.GetConversation(conversationId);
-        if (profile == null)
-        {
-            return NotFound($"A User with username {username} was not found");
-        }
-            
-        return Ok(profile);
+        var profile = await _profileStore.GetProfile(username);
+        if (profile == null) return NotFound($"There is no profile with username: {username}");
+        var conversation = await _conversationStore.GetConversations(username);
+        /*
+         TODO: Add more tests to verify
+         */
+        return Ok(conversation);
     }
 
-    [HttpPut("{username}")]
-    public async Task<ActionResult<Profile>> UpdateProfile(string username, PutProfileRequest request)
+    [HttpGet("{username}")]
+    public async Task<ActionResult<List<Conversation>?>> GetMessages(string conversationId)
     {
-        var existingProfile = await _profileStore.GetProfile(username);
-        if (existingProfile == null)
-        {
-            return NotFound($"A User with username {username} was not found");
-        }
-
-        var existingImage = await _imageStore.GetImage(request.ProfilePictureId.ToString());
-
-        if (existingImage == null)
-        {
-            return NotFound("The image you are trying to upload cannot be found. Please try uploading it again.");
-        }
-        
-        var profile = new Profile(username, request.firstName, request.lastName, request.ProfilePictureId);
-        await _profileStore.UpsertProfile(profile);
-        return Ok(profile);
+        var messages = await _messageStore.GetMessages(conversationId);
+        /*
+         TODO: Add more tests to verify
+         */
+        return Ok(messages);
     }
 }
