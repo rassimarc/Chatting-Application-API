@@ -36,7 +36,7 @@ public class ConversationController : ControllerBase
         }
 
         long time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-        Guid conversationId = new Guid();
+        var conversationId = Guid.NewGuid();
         
         var message = new Message(
             conversation.firstMessage.messageId,
