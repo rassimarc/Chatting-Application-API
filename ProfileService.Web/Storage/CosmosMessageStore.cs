@@ -13,7 +13,7 @@ public class CosmosMessageStore : IMessageStore
         _cosmosClient = cosmosClient;
     }
 
-    private Container Container => _cosmosClient.GetDatabase("ContainerProfile").GetContainer("ContainerProfile");
+    private Container Container => _cosmosClient.GetDatabase("ContainerMessages").GetContainer("ContainerMessages");
 
     public async Task UpsertMessage(Message message)
     {
