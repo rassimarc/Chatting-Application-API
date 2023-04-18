@@ -11,12 +11,14 @@ namespace ProfileService.Web.Controllers;
 public class ConversationController : ControllerBase
 {
     private readonly IProfileStore _profileStore;
+    private readonly IImageStore _imageStore;
     private readonly IConversationStore _conversationStore;
     private readonly IMessageStore _messageStore;
 
-    public ConversationController(IProfileStore profileStore, IConversationStore conversationStore, IMessageStore messageStore)
+    public ConversationController(IProfileStore profileStore, IImageStore imageStore, IConversationStore conversationStore, IMessageStore messageStore)
     {
         _profileStore = profileStore;
+        _imageStore = imageStore;
         _conversationStore = conversationStore;
         _messageStore = messageStore;
     }
