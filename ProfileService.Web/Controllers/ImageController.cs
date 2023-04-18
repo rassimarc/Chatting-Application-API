@@ -5,7 +5,6 @@ using ProfileService.Web.Storage;
 
 namespace ProfileService.Web.Controllers;
 
-
 [ApiController]
 [Route("[controller]")]
 public class ImageController : ControllerBase

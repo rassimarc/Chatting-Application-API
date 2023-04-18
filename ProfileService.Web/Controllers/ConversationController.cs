@@ -37,7 +37,7 @@ public class ConversationController : ControllerBase
 
         long time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         Guid conversationId = new Guid();
-        /*
+        
         var message = new Message(
             conversation.firstMessage.messageId,
             conversationId,
@@ -45,7 +45,7 @@ public class ConversationController : ControllerBase
             conversation.firstMessage.text,
             time
         );
-*/
+        
         var conversationdb = new Conversation(
             conversationId,
             time,
@@ -56,10 +56,9 @@ public class ConversationController : ControllerBase
             time
         );
         await _conversationStore.UpsertConversation(conversationdb);
-        /*
-         TODO: Add more tests to validate the conversation and messages
-         */
-        return CreatedAtAction(nameof(GetConversations), new { conversationId = conversationresponse.conversationId },
+        await _messageStore.UpsertMessage(message);
+
+        return CreatedAtAction(nameof(GetConversations), new { username = conversation.participants[0] },
             conversationresponse);
     }
     
@@ -72,6 +71,13 @@ public class ConversationController : ControllerBase
         {
             return Conflict($"A user with username {message.senderUsername} doesn't exist");
         }
+
+        var existingConversation = await _conversationStore.GetConversations(message.senderUsername);
+        if (existingConversation == null)
+        {
+            return Conflict($"A Conversation with conversationId {conversationId} doesn't exist");
+        }
+ 
 
         long time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         var messageDB = new Message(
@@ -89,21 +95,22 @@ public class ConversationController : ControllerBase
         /*
          TODO: Correct return message
          */
-        return CreatedAtAction(nameof(GetConversations), new { conversationId = conversationId },
+        return CreatedAtAction(nameof(GetConversations), new { conversationIduser = conversationId },
             messageresponse);
     }
     
     [HttpGet("{username}")]
-    public async Task<ActionResult<List<Conversation>?>> GetConversations(string username)
+    public async Task<ActionResult<List<Conversation>>> GetConversations(string username)
     {
         var profile = await _profileStore.GetProfile(username);
         if (profile == null) return NotFound($"There is no profile with username: {username}");
-        var conversation = await _conversationStore.GetConversations(username);
+        var conversations = await _conversationStore.GetConversations(username);
         /*
          TODO: Add more tests to verify
          */
-        return Ok(conversation);
+        return Ok(conversations);
     }
+
 
     [HttpGet("{conversationId}")]
     public async Task<ActionResult<List<Conversation>?>> GetMessages(string conversationId)
