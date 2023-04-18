@@ -77,7 +77,6 @@ public class ConversationController : ControllerBase
         {
             return Conflict($"A Conversation with conversationId {conversationId.ToString()} doesn't exist");
         }
- 
 
         long time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         var messageDB = new Message(
@@ -95,7 +94,7 @@ public class ConversationController : ControllerBase
         /*
          TODO: Correct return message
          */
-        return CreatedAtAction(nameof(GetConversations), new { conversationIduser = conversationId },
+        return CreatedAtAction(nameof(GetConversations), new { username = message.senderUsername },
             messageresponse);
     }
     
