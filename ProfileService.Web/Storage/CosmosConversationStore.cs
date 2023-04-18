@@ -31,42 +31,26 @@ public class CosmosConversationStore : IConversationStore
 
     public async Task<List<Conversation>?> GetConversations(string participant)
     {
-        try
+        var queryText = "SELECT * FROM c WHERE ARRAY_CONTAINS(c.participants, @participant)";
+        var queryDefinition = new QueryDefinition(queryText)
+            .WithParameter("@participant", participant);
+
+        var queryResultSetIterator = Container.GetItemQueryIterator<ConversationEntity>(queryDefinition);
+
+        var conversations = new List<Conversation>();
+        while (queryResultSetIterator.HasMoreResults)
         {
-            List<Conversation> conversations= new List<Conversation>();
-            QueryRequestOptions requestOptions = new QueryRequestOptions
+            var queryResponse = await queryResultSetIterator.ReadNextAsync();
+            foreach (var entity in queryResponse)
             {
-                PartitionKey = new PartitionKey(participant)
-            };
-            QueryDefinition query = new QueryDefinition(
-                "SELECT * FROM c WHERE c.participants[0] = @participant OR c.participants[1] = @participant")
-                .WithParameter("@participant", participant);
-
-            FeedIterator<ConversationEntity> iterator = Container.GetItemQueryIterator<ConversationEntity>(
-                query,
-                requestOptions: new QueryRequestOptions { PartitionKey = new PartitionKey(participant) });
-
-            while (iterator.HasMoreResults)
-            {
-                FeedResponse<ConversationEntity> response = await iterator.ReadNextAsync();
-                foreach (ConversationEntity entity in response.Resource)
-                {
-                    conversations.Add(toConversation(entity));
-                }
+                var conversation = toConversation(entity);
+                conversations.Add(conversation);
             }
+        }
 
-            return conversations;
-        }
-        catch (CosmosException e)
-        {
-            if (e.StatusCode == HttpStatusCode.NotFound)
-            {
-                return null;
-            }
-            throw;
-        }
+        return conversations;
     }
-
+    
     public async Task DeleteConversation(string participant, string conversationId)
     {
         try

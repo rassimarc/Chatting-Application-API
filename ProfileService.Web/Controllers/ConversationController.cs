@@ -7,7 +7,7 @@ using ProfileService.Web.Storage;
 namespace ProfileService.Web.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/conversations")]
 public class ConversationController : ControllerBase
 {
     private readonly IProfileStore _profileStore;
@@ -75,7 +75,7 @@ public class ConversationController : ControllerBase
         var existingConversation = await _conversationStore.GetConversations(message.senderUsername);
         if (existingConversation == null)
         {
-            return Conflict($"A Conversation with conversationId {conversationId} doesn't exist");
+            return Conflict($"A Conversation with conversationId {conversationId.ToString()} doesn't exist");
         }
  
 
@@ -99,8 +99,8 @@ public class ConversationController : ControllerBase
             messageresponse);
     }
     
-    [HttpGet("{username}")]
-    public async Task<ActionResult<List<Conversation>>> GetConversations(string username)
+    [HttpGet]
+    public async Task<ActionResult<List<Conversation>>> GetConversations([FromQuery] string username)
     {
         var profile = await _profileStore.GetProfile(username);
         if (profile == null) return NotFound($"There is no profile with username: {username}");
@@ -113,7 +113,7 @@ public class ConversationController : ControllerBase
 
 
     [HttpGet("{conversationId}")]
-    public async Task<ActionResult<List<Conversation>?>> GetMessages(string conversationId)
+    public async Task<ActionResult<List<Conversation>?>> GetMessages([FromQuery]string conversationId)
     {
         var messages = await _messageStore.GetMessages(conversationId);
         /*
