@@ -1,6 +1,5 @@
 using System.Net;
 using Microsoft.Azure.Cosmos;
-using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 using ProfileService.Web.Dtos;
 using ProfileService.Web.Storage.Entities;
 

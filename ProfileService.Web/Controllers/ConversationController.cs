@@ -37,6 +37,7 @@ public class ConversationController : ControllerBase
 
         long time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         Guid conversationId = new Guid();
+        /*
         var message = new Message(
             conversation.firstMessage.messageId,
             conversationId,
@@ -44,7 +45,7 @@ public class ConversationController : ControllerBase
             conversation.firstMessage.text,
             time
         );
-
+*/
         var conversationdb = new Conversation(
             conversationId,
             time,
@@ -104,7 +105,7 @@ public class ConversationController : ControllerBase
         return Ok(conversation);
     }
 
-    [HttpGet("{username}")]
+    [HttpGet("{conversationId}")]
     public async Task<ActionResult<List<Conversation>?>> GetMessages(string conversationId)
     {
         var messages = await _messageStore.GetMessages(conversationId);

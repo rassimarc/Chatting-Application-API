@@ -18,8 +18,8 @@ builder.Services.Configure<CosmosSettings>(builder.Configuration.GetSection("Cos
 // Add Services
 
 builder.Services.AddSingleton<IProfileStore, CosmosProfileStore>();
-
-
+builder.Services.AddSingleton<IConversationStore, CosmosConversationStore>();
+builder.Services.AddSingleton<IMessageStore, CosmosMessageStore>();
 builder.Services.AddSingleton<IImageStore, CosmosImageStore>();
 
 builder.Services.AddSingleton(sp =>
