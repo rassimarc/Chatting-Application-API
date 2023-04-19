@@ -34,34 +34,23 @@ public class CosmosMessageStore : IMessageStore
 
     public async Task<List<Message>?> GetMessages(string conversationId)
     {
-        try
+        var queryText = "SELECT * FROM c WHERE c.partitionKey = @conversationId";
+        var queryDefinition = new QueryDefinition(queryText)
+            .WithParameter("@conversationId", conversationId);
+        var queryResultSetIterator = Container.GetItemQueryIterator<MessageEntity>(queryDefinition);
+    
+        var messages = new List<Message>();
+        while (queryResultSetIterator.HasMoreResults)
         {
-            var messages = new List<Message>();
-            string partitionKeyName = "conversationId";
-            string query = $"SELECT * FROM c WHERE c.{partitionKeyName} = '{conversationId}' ORDER BY c.time DESC";
-            
-            var queryDefinition = new QueryDefinition(query);
-            var resultSetIterator = Container.GetItemQueryIterator<MessageEntity>(queryDefinition);
-            
-            while (resultSetIterator.HasMoreResults)
+            var queryResponse = await queryResultSetIterator.ReadNextAsync();
+            foreach (var entity in queryResponse)
             {
-                var response = await resultSetIterator.ReadNextAsync();
-                foreach (var item in response)
-                {
-                    var entity = item;
-                    messages.Add(ToMessage(entity));
-                }
+                var conversation = ToMessage(entity);
+                messages.Add(conversation);
             }
-            return messages;
         }
-        catch (CosmosException e)
-        {
-            if (e.StatusCode == HttpStatusCode.NotFound)
-            {
-                return null;
-            }
-            throw;
-        }
+
+        return messages;
     }
     
     public async Task DeleteMessage(string messageId, string conversationId)
@@ -97,7 +86,6 @@ public class CosmosMessageStore : IMessageStore
 
     private static Message ToMessage(MessageEntity entity)
     {
-        DateTimeOffset dateTimeOffset = DateTimeOffset.Parse(entity.time);
         return new Message(
             messageId: entity.id,
             new Guid(entity.partitionKey),

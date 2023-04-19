@@ -1,5 +1,7 @@
 using System.Threading.Tasks.Dataflow;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Azure.Cosmos.Linq;
 using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 using ProfileService.Web.Dtos;
 using ProfileService.Web.Storage;
@@ -28,11 +30,28 @@ public class ConversationController : ControllerBase
     {
         var existingProfile1 = await _profileStore.GetProfile(conversation.participants[0]);
         var existingProfile2 = await _profileStore.GetProfile(conversation.participants[1]);
-        
+        var conversations = await _conversationStore.GetConversations(conversation.participants[0]);
+
         if (existingProfile1 == null || existingProfile2 == null)
         {
             return Conflict($"A user with username {conversation.participants[0]}" +
                             $" or {conversation.participants[1]} doesn't exist");
+        }
+        
+        if (conversation.firstMessage.text.Length == 0 ||
+            conversation.participants.Count != 2)
+        {
+            return Content("Invalid message, please try again.");
+        }
+        
+        foreach (var UserConversations in conversations)
+        {
+            if ((UserConversations.participants[0] == conversation.participants[0] &&
+                 UserConversations.participants[1] == conversation.participants[1]) ||
+                (UserConversations.participants[0] == conversation.participants[1] &&
+                 UserConversations.participants[1] == conversation.participants[0]))
+                return Conflict($"A conversation between {existingProfile1.username} " +
+                                $"and {existingProfile2.username} already exists.");
         }
 
         long time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
@@ -73,8 +92,7 @@ public class ConversationController : ControllerBase
         }
 
         var existingConversation = await _conversationStore.GetConversations(message.senderUsername);
-
-        if (existingConversation.All(conv => conv.conversationId != conversationId))
+        if (existingConversation == null)
         {
             return Conflict($"A Conversation with conversationId {conversationId.ToString()} doesn't exist");
         }
@@ -92,6 +110,9 @@ public class ConversationController : ControllerBase
             time
         );
         await _messageStore.UpsertMessage(messageDB);
+        /*
+         TODO: Correct return message
+         */
         return CreatedAtAction(nameof(GetConversations), new { username = message.senderUsername },
             messageresponse);
     }
@@ -102,26 +123,20 @@ public class ConversationController : ControllerBase
         var profile = await _profileStore.GetProfile(username);
         if (profile == null) return NotFound($"There is no profile with username: {username}");
         var conversations = await _conversationStore.GetConversations(username);
+        /*
+         TODO: Add more tests to verify
+         */
         return Ok(conversations);
     }
-    
-    // [HttpGet("{conversationId}")]
-    // public async Task<ActionResult<List<Conversation>?>> GetMessages([FromQuery]string conversationId)
-    // {
-    //     var messages = await _messageStore.GetMessages(conversationId);
-    //     /*
-    //      TODO: Add more tests to verify
-    //      */
-    //     return Ok(messages);
-    // }
-    
-    [HttpGet("{conversationId}")]
-    public async Task<ActionResult<List<Message>?>> GetMessages([FromQuery]string conversationId)
+
+
+    [HttpGet("{conversationId}/messages")]
+    public async Task<ActionResult<List<Conversation>?>> GetMessages(string conversationId)
     {
         var messages = await _messageStore.GetMessages(conversationId);
-        if (messages == null) return NotFound($"There is no conversation with id: {conversationId}");
+        /*
+         TODO: Add more tests to verify
+         */
         return Ok(messages);
     }
-    
-    
 }
