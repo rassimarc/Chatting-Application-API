@@ -1,8 +1,4 @@
-using System.Threading.Tasks.Dataflow;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.Azure.Cosmos.Linq;
-using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 using ProfileService.Web.Dtos;
 using ProfileService.Web.Storage;
 
@@ -13,14 +9,12 @@ namespace ProfileService.Web.Controllers;
 public class ConversationController : ControllerBase
 {
     private readonly IProfileStore _profileStore;
-    private readonly IImageStore _imageStore;
     private readonly IConversationStore _conversationStore;
     private readonly IMessageStore _messageStore;
 
     public ConversationController(IProfileStore profileStore, IImageStore imageStore, IConversationStore conversationStore, IMessageStore messageStore)
     {
         _profileStore = profileStore;
-        _imageStore = imageStore;
         _conversationStore = conversationStore;
         _messageStore = messageStore;
     }
@@ -85,7 +79,7 @@ public class ConversationController : ControllerBase
     public async Task<ActionResult<ConversationResponse>> AddMessage(SendMessageRequest message, Guid conversationId)
     {
         var existingProfile = await _profileStore.GetProfile(message.senderUsername);
-        
+
         if (existingProfile == null)
         {
             return Conflict($"A user with username {message.senderUsername} doesn't exist");
@@ -95,6 +89,11 @@ public class ConversationController : ControllerBase
         if (existingConversation == null)
         {
             return Conflict($"A Conversation with conversationId {conversationId.ToString()} doesn't exist");
+        }
+        
+        if (message.text.Length == 0)
+        {
+            return Content("Invalid message, please try again.");
         }
 
         long time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
@@ -110,9 +109,6 @@ public class ConversationController : ControllerBase
             time
         );
         await _messageStore.UpsertMessage(messageDB);
-        /*
-         TODO: Correct return message
-         */
         return CreatedAtAction(nameof(GetConversations), new { username = message.senderUsername },
             messageresponse);
     }
@@ -123,9 +119,6 @@ public class ConversationController : ControllerBase
         var profile = await _profileStore.GetProfile(username);
         if (profile == null) return NotFound($"There is no profile with username: {username}");
         var conversations = await _conversationStore.GetConversations(username);
-        /*
-         TODO: Add more tests to verify
-         */
         return Ok(conversations);
     }
 
@@ -134,9 +127,8 @@ public class ConversationController : ControllerBase
     public async Task<ActionResult<List<Conversation>?>> GetMessages(string conversationId)
     {
         var messages = await _messageStore.GetMessages(conversationId);
-        /*
-         TODO: Add more tests to verify
-         */
+        if (messages.Count == 0) 
+            return NotFound($"There is no conversation with Conversation ID = {conversationId}");
         return Ok(messages);
     }
 }
