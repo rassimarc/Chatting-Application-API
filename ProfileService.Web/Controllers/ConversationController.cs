@@ -129,6 +129,13 @@ public class ConversationController : ControllerBase
         var messages = await _messageStore.GetMessages(conversationId);
         if (messages.Count == 0) 
             return NotFound($"There is no conversation with Conversation ID = {conversationId}");
-        return Ok(messages);
+        var messageResponse = new List<GetMessageResponse>();
+        foreach (var message in messages)
+        {
+            messageResponse.Add(
+                new GetMessageResponse(message.text, message.senderUsername, message.unixTime)
+                );
+        }
+        return Ok(messageResponse);
     }
 }
