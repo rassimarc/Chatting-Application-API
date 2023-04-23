@@ -32,13 +32,17 @@ public class CosmosMessageStore : IMessageStore
     }
 
 
-    public async Task<List<Message>?> GetMessages(string conversationId)
+    public async Task<(List<Message> messages, string continuationToken)> GetMessages(int pageSize,
+        string continuationToken, string conversationId)
     {
         var queryText = "SELECT * FROM c WHERE c.partitionKey = @conversationId";
         var queryDefinition = new QueryDefinition(queryText)
             .WithParameter("@conversationId", conversationId);
-        var queryResultSetIterator = Container.GetItemQueryIterator<MessageEntity>(queryDefinition);
-    
+        var queryResultSetIterator = Container.GetItemQueryIterator<MessageEntity>(queryDefinition, requestOptions: new QueryRequestOptions()
+        {
+            MaxItemCount = pageSize
+        }, continuationToken: continuationToken);
+        
         var messages = new List<Message>();
         while (queryResultSetIterator.HasMoreResults)
         {
@@ -48,9 +52,15 @@ public class CosmosMessageStore : IMessageStore
                 var conversation = ToMessage(entity);
                 messages.Add(conversation);
             }
+
+            if (messages.Count == pageSize)
+            {
+                continuationToken = queryResponse.ContinuationToken;
+                break;
+            }
         }
 
-        return messages;
+        return (messages, continuationToken);
     }
     
     public async Task DeleteMessage(string messageId, string conversationId)
