@@ -1,4 +1,6 @@
-﻿using System.Web;
+﻿using System.Net;
+using System.Text;
+using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using ProfileService.Web.Dtos;
 
@@ -15,8 +17,10 @@ public class ConversationService : IConversationService
                 new GetMessageResponse(message.text, message.senderUsername, message.unixTime)
             );
         }
-        var encodedContinuationToken = HttpUtility.UrlEncode(continuationToken);
-        var messageResponse = new MessageResponse(getMessageResponse, encodedContinuationToken);
+        var encodedContinuationToken = WebUtility.UrlEncode(continuationToken);
+        var adjustedContinuationToken = Uri.EscapeDataString(encodedContinuationToken);
+        var nextUri = $"/api/conversations//messages?continuationToken={adjustedContinuationToken}";
+        var messageResponse = new MessageResponse(getMessageResponse, nextUri);
         return messageResponse;
     }
 }

@@ -32,8 +32,8 @@ public class CosmosMessageStore : IMessageStore
     }
 
 
-    public async Task<(List<Message>? messages, string? continuationToken)> GetMessages(int pageSize,
-        string continuationToken, string? conversationId)
+    public async Task<(List<Message> messages, string? continuationToken)> GetMessages(int pageSize,
+        string? continuationToken, string? conversationId)
     {
         var queryText = "SELECT * FROM c WHERE c.partitionKey = @conversationId";
         var queryDefinition = new QueryDefinition(queryText)
