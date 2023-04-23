@@ -21,8 +21,4 @@
         <InternalsVisibleTo Include="ProfileService.Web.Tests" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Services" />
-    </ItemGroup>
-
 </Project>

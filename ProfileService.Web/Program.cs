@@ -1,6 +1,7 @@
 using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Options;
 using ProfileService.Web.Configuration;
+using ProfileService.Web.Services;
 using ProfileService.Web.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +22,7 @@ builder.Services.AddSingleton<IProfileStore, CosmosProfileStore>();
 builder.Services.AddSingleton<IConversationStore, CosmosConversationStore>();
 builder.Services.AddSingleton<IMessageStore, CosmosMessageStore>();
 builder.Services.AddSingleton<IImageStore, CosmosImageStore>();
+builder.Services.AddSingleton<IConversationService, ConversationService>();
 
 builder.Services.AddSingleton(sp =>
 {

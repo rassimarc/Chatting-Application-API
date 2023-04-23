@@ -1,6 +1,7 @@
 using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using ProfileService.Web.Dtos;
+using ProfileService.Web.Services;
 using ProfileService.Web.Storage;
 
 namespace ProfileService.Web.Controllers;
@@ -12,12 +13,14 @@ public class ConversationController : ControllerBase
     private readonly IProfileStore _profileStore;
     private readonly IConversationStore _conversationStore;
     private readonly IMessageStore _messageStore;
+    private readonly IConversationService _conversationService;
 
-    public ConversationController(IProfileStore profileStore, IImageStore imageStore, IConversationStore conversationStore, IMessageStore messageStore)
+    public ConversationController(IProfileStore profileStore, IConversationStore conversationStore, IMessageStore messageStore, IConversationService conversationService)
     {
         _profileStore = profileStore;
         _conversationStore = conversationStore;
         _messageStore = messageStore;
+        _conversationService = conversationService;
     }
 
     [HttpPost]
@@ -125,25 +128,14 @@ public class ConversationController : ControllerBase
 
 
     [HttpGet("{conversationId}/messages")]
-    public async Task<ActionResult<List<Conversation>?>> GetMessages([FromQuery] int limit, string conversationId,
-        [FromQuery] string? continuationtoken = null)
+    public async Task<ActionResult<MessageResponse?>> GetMessages(string conversationId,
+        [FromQuery] string? continuationtoken = null, [FromQuery] int limit = 50)
     {
         var decodedContinuationToken = HttpUtility.UrlDecode(continuationtoken);
-
         var messages = await _messageStore.GetMessages(limit , decodedContinuationToken, conversationId);
         if (messages.messages.Count == 0) 
             return NotFound($"There is no conversation with Conversation ID = {conversationId}");
-        var messageResponse = new List<GetMessageResponse>();
-        foreach (var message in messages.messages)
-        {
-            messageResponse.Add(
-                new GetMessageResponse(message.text, message.senderUsername, message.unixTime)
-                );
-        }
-        
-        var encodedContinuationToken = HttpUtility.UrlEncode(messages.continuationToken);
-
-        var rou7 = new MessageResponse(messageResponse, encodedContinuationToken);
-        return Ok(rou7);
+        var messageResponse = _conversationService.GetMessages(messages.messages, messages.continuationToken);
+        return Ok(messageResponse);
     }
 }
