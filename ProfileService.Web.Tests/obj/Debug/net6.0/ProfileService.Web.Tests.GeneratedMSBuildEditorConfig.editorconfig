@@ -8,4 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ProfileService.Web.Tests
-build_property.ProjectDir = C:\Users\moukh\Documents\riders\ProfileService_new (1)\ProfileService_new\ProfileService.Web.Tests\
+build_property.ProjectDir = /Users/macbookpro/Downloads/Lab/ProfileService.Web.Tests/
