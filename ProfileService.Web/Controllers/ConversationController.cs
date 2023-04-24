@@ -135,7 +135,7 @@ public class ConversationController : ControllerBase
         var messagesToken = await _messageStore.GetMessages(limit , decodedContinuationToken, conversationId);
         if (messagesToken.messages.Count == 0) 
             return NotFound($"There is no conversation with Conversation ID = {conversationId}");
-        var messageResponse = _conversationService.GetMessages(messagesToken.messages, messagesToken.continuationToken);
+        var messageResponse = _conversationService.GetMessages(messagesToken.messages, messagesToken.continuationToken, conversationId, limit);
         return Ok(messageResponse);
     }
 }
