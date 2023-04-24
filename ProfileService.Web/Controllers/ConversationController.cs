@@ -32,14 +32,14 @@ public class ConversationController : ControllerBase
 
         if (existingProfile1 == null || existingProfile2 == null)
         {
-            return Conflict($"A user with username {conversation.participants[0]}" +
+            return NotFound($"A user with username {conversation.participants[0]}" +
                             $" or {conversation.participants[1]} doesn't exist");
         }
         
         if (conversation.firstMessage.text.Length == 0 ||
             conversation.participants.Count != 2)
         {
-            return Content("Invalid message, please try again.");
+            return BadRequest("Invalid message, please try again.");
         }
         
         foreach (var UserConversations in conversations)
@@ -86,7 +86,7 @@ public class ConversationController : ControllerBase
 
         if (existingProfile == null)
         {
-            return Conflict($"A user with username {message.senderUsername} doesn't exist");
+            return NotFound($"A user with username {message.senderUsername} doesn't exist");
         }
 
         var existingConversation = await _conversationStore.GetConversations(message.senderUsername);
@@ -97,7 +97,7 @@ public class ConversationController : ControllerBase
         
         if (message.text.Length == 0)
         {
-            return Content("Invalid message, please try again.");
+            return BadRequest("Invalid message, please try again.");
         }
 
         long time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
@@ -133,8 +133,7 @@ public class ConversationController : ControllerBase
     {
         var decodedContinuationToken = HttpUtility.UrlDecode(continuationtoken);
         var messagesToken = await _messageStore.GetMessages(limit , decodedContinuationToken, conversationId);
-        if (messagesToken.messages.Count == 0) 
-            return NotFound($"There is no conversation with Conversation ID = {conversationId}");
+        if (messagesToken.messages.Count == 0) return NotFound($"There is no conversation with Conversation ID = {conversationId}");
         var messageResponse = _conversationService.GetMessages(messagesToken.messages, messagesToken.continuationToken, conversationId, limit);
         return Ok(messageResponse);
     }
