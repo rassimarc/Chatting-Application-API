@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using ProfileService.Web.Dtos;
 using ProfileService.Web.Services;
-using System;
-using System.IO;
-using System.Threading.Tasks;
+
 
 namespace ProfileService.Web.Controllers
 {
