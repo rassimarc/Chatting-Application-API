@@ -55,15 +55,16 @@ public class ImageController : ControllerBase
     [HttpGet("[action]")]
     public async Task<ActionResult> DownloadImage(Guid guid)
     {
-        
+
         var existingImage = await _imageStore.GetImage(guid.ToString());
         if (existingImage == null)
-        {   
+        {
             return NotFound("The image you are trying to download cannot be found. Please try another guid.");
         }
-        
-        BlobClient blobClient = new BlobClient(_connectionString, "image", 
-            string.Concat(guid.ToString(),".png"));;
+
+        BlobClient blobClient = new BlobClient(_connectionString, "image",
+            string.Concat(guid.ToString(), ".png"));
+        ;
 
         using (var stream = new MemoryStream())
         {
@@ -71,6 +72,8 @@ public class ImageController : ControllerBase
             stream.Position = 0;
             var contentType = (await blobClient.GetPropertiesAsync()).Value.ContentType;
             return File(stream.ToArray(), contentType, blobClient.Name);
+
+
         }
     }
 }

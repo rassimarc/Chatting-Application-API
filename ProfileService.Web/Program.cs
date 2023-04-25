@@ -23,8 +23,7 @@ builder.Services.AddSingleton<IConversationStore, CosmosConversationStore>();
 builder.Services.AddSingleton<IMessageStore, CosmosMessageStore>();
 builder.Services.AddSingleton<IImageStore, CosmosImageStore>();
 builder.Services.AddSingleton<IConversationService, ConversationService>();
-builder.Services.AddSingleton<IImageService, ImageService>();
-
+//builder.Services.AddSingleton<IImageService, ImageService>();
 
 builder.Services.AddSingleton(sp =>
 {

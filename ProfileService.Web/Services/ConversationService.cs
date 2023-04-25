@@ -17,6 +17,8 @@ public class ConversationService : IConversationService
                 new GetMessageResponse(message.text, message.senderUsername, message.unixTime)
             );
         }
+
+        var list = getMessageResponse.OrderByDescending(message => message.UnixTime).ToList();
         var nextUri = $"/api/conversations/{conversationId}/messages?limit={limit}";
         if (continuationToken != null)
         {
@@ -24,7 +26,7 @@ public class ConversationService : IConversationService
             var adjustedContinuationToken = Uri.EscapeDataString(encodedContinuationToken);
             nextUri += $"&continuationToken={adjustedContinuationToken}";
         }
-        var messageResponse = new MessageResponse(getMessageResponse, nextUri);
+        var messageResponse = new MessageResponse(list, nextUri);
         return messageResponse;
     }
 }

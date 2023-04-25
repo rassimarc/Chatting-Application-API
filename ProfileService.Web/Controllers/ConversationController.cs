@@ -129,10 +129,10 @@ public class ConversationController : ControllerBase
 
     [HttpGet("{conversationId}/messages")]
     public async Task<ActionResult<MessageResponse?>> GetMessages(string conversationId,
-        [FromQuery] int limit = 50, [FromQuery] string? continuationtoken = null)
+        [FromQuery] int limit = 50, [FromQuery] string? continuationtoken = null, [FromQuery] long lastSeenMessageTime = 0)
     {
         var decodedContinuationToken = HttpUtility.UrlDecode(continuationtoken);
-        var messagesToken = await _messageStore.GetMessages(limit , decodedContinuationToken, conversationId);
+        var messagesToken = await _messageStore.GetMessages(limit , decodedContinuationToken, conversationId, lastSeenMessageTime);
         if (messagesToken.messages.Count == 0) return NotFound($"There is no conversation with Conversation ID = {conversationId}");
         var messageResponse = _conversationService.GetMessages(messagesToken.messages, messagesToken.continuationToken, conversationId, limit);
         return Ok(messageResponse);

@@ -6,7 +6,7 @@ public interface IMessageStore
 {
     Task UpsertMessage(Message message);
     Task<(List<Message> messages, string? continuationToken)> GetMessages(int pageSize, string? continuationToken,
-        string conversationId);
+        string conversationId, long lastSeenMessageTime);
     
     Task DeleteMessage(string messageId, string conversationId);
 

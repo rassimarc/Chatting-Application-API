@@ -33,11 +33,12 @@ public class CosmosMessageStore : IMessageStore
 
 
     public async Task<(List<Message> messages, string? continuationToken)> GetMessages(int pageSize,
-        string? continuationToken, string? conversationId)
+        string? continuationToken, string? conversationId, long lastSeenMessageTime)
     {
-        var queryText = "SELECT * FROM c WHERE c.partitionKey = @conversationId";
+        var queryText = "SELECT * FROM c WHERE c.partitionKey = @conversationId AND c.time > @lastSeenMessageTime";
         var queryDefinition = new QueryDefinition(queryText)
-            .WithParameter("@conversationId", conversationId);
+            .WithParameter("@conversationId", conversationId)
+            .WithParameter("@lastSeenMessageTime", lastSeenMessageTime);
         var queryResultSetIterator = Container.GetItemQueryIterator<MessageEntity>(queryDefinition, requestOptions: new QueryRequestOptions()
         {
             MaxItemCount = pageSize
