@@ -129,7 +129,6 @@ public class ConversationController : ControllerBase
         return Ok(messageResponse);
     }
 
-
     [HttpGet("{conversationId}/messages")]
     public async Task<ActionResult<MessageResponse?>> GetMessages(string conversationId,
         [FromQuery] int? limit, [FromQuery] string? continuationtoken, [FromQuery] long lastSeenMessageTime)
