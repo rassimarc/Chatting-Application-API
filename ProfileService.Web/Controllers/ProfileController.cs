@@ -5,7 +5,7 @@ using ProfileService.Web.Storage;
 namespace ProfileService.Web.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class ProfileController : ControllerBase
 {
     private readonly IProfileStore _profileStore;

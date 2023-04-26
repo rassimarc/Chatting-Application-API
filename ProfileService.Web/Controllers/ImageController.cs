@@ -6,7 +6,7 @@ using ProfileService.Web.Storage;
 namespace ProfileService.Web.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class ImageController : ControllerBase
 {
     //Trying to create a Blob Client
@@ -21,7 +21,7 @@ public class ImageController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<UploadImageRequest>>UploadImage([FromForm] UploadImageRequest request)
+    public async Task<ActionResult<UploadImageRequest>> UploadImage([FromForm] UploadImageRequest request)
     {
         {
             //guid associated with file
@@ -37,6 +37,7 @@ public class ImageController : ControllerBase
                 {
                     throw new FormatException("The submitted file must be of type png or jpg.");
                 }
+
                 using (var stream = new MemoryStream())
                 {
                     await request.File.CopyToAsync(stream);
@@ -45,15 +46,17 @@ public class ImageController : ControllerBase
                     await blobContainerClient.UploadBlobAsync(name, stream);
                 }
             }
+
             var image = new Image(guid.ToString());
             await _imageStore.UpsertImage(image);
-            return Ok("Your picture was succesfully uploaded, please use this code: \n" + guid + "\nwhen creating your profile.");
+            return Ok("Your picture was succesfully uploaded, please use this code: \n" + guid +
+                      "\nwhen creating your profile.");
         }
     }
 
 
     [HttpGet("[action]")]
-    public async Task<ActionResult> DownloadImage(Guid guid)
+    public async Task<IActionResult> DownloadImage(Guid guid)
     {
 
         var existingImage = await _imageStore.GetImage(guid.ToString());
@@ -72,8 +75,6 @@ public class ImageController : ControllerBase
             stream.Position = 0;
             var contentType = (await blobClient.GetPropertiesAsync()).Value.ContentType;
             return File(stream.ToArray(), contentType, blobClient.Name);
-
-
         }
     }
 }

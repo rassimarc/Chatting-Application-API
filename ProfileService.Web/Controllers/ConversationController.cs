@@ -23,7 +23,7 @@ public class ConversationController : ControllerBase
         _messageStore = messageStore;
         _conversationService = conversationService;
     }
-
+/*
     [HttpPost]
     public async Task<ActionResult<ConversationResponse>> AddConversation(ConversationRequest conversation)
     {
@@ -79,7 +79,7 @@ public class ConversationController : ControllerBase
         return CreatedAtAction(nameof(GetConversations), new { username = conversation.participants[0] },
             conversationresponse);
     }
-    
+    */
     [HttpPost("{conversationId}")]
     public async Task<ActionResult<ConversationResponse>> AddMessage(SendMessageRequest message, Guid conversationId)
     {
@@ -119,14 +119,12 @@ public class ConversationController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult<ConversationResponse?>> GetConversations(string username,
-        [FromQuery] int limit = 50, [FromQuery] string? continuationtoken = null, [FromQuery] long lastSeenMessageTime = 0)
+    public async Task<ActionResult<List<Conversation>>> GetConversations([FromQuery] string username)
     {
-        var decodedContinuationToken = HttpUtility.UrlDecode(continuationtoken);
-        var conversationToken = await _conversationStore.GetConversations(limit , decodedContinuationToken, username, lastSeenMessageTime);
-        if (conversationToken.messages.Count == 0) return NotFound($"There is no conversation with Conversation ID = {conversationId}");
-        var messageResponse = _conversationService.GetMessages(messagesToken.messages, messagesToken.continuationToken, conversationId, limit);
-        return Ok(messageResponse);
+        var profile = await _profileStore.GetProfile(username);
+        if (profile == null) return NotFound($"There is no profile with username: {username}");
+        var conversations = await _conversationStore.GetConversations(username);
+        return Ok(conversations);
     }
 
     [HttpGet("{conversationId}/messages")]

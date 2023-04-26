@@ -29,6 +29,11 @@ public class CosmosConversationStore : IConversationStore
         await Container.UpsertItemAsync(ToEntity(conversation, 1));
     }
 
+    public Task<List<Conversation>?> GetConversations(string participant)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<List<Conversation>?> GetConversations(int pageSize,
         string? continuationToken, string? username, long lastSeenMessageTime)
     {
