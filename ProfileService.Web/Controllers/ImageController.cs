@@ -6,7 +6,7 @@ using ProfileService.Web.Storage;
 namespace ProfileService.Web.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/images")]
 public class ImageController : ControllerBase
 {
     //Trying to create a Blob Client
@@ -21,7 +21,7 @@ public class ImageController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<UploadImageRequest>> UploadImage([FromForm] UploadImageRequest request)
+    public async Task<ActionResult<UploadImageResponse>> UploadImage([FromForm] UploadImageRequest request)
     {
         {
             //guid associated with file
@@ -33,11 +33,12 @@ public class ImageController : ControllerBase
             {
                 fileName = file.FileName;
                 string extension = Path.GetExtension(fileName);
+                /*
                 if (extension != ".png" && !extension.Equals(".jpg"))
                 {
                     throw new FormatException("The submitted file must be of type png or jpg.");
                 }
-
+*/
                 using (var stream = new MemoryStream())
                 {
                     await request.File.CopyToAsync(stream);
@@ -49,14 +50,13 @@ public class ImageController : ControllerBase
 
             var image = new Image(guid.ToString());
             await _imageStore.UpsertImage(image);
-            return Ok("Your picture was succesfully uploaded, please use this code: \n" + guid +
-                      "\nwhen creating your profile.");
+            return Ok(new UploadImageResponse(guid.ToString()));
         }
     }
 
 
-    [HttpGet("[action]")]
-    public async Task<IActionResult> DownloadImage(Guid guid)
+    [HttpGet("{guid}")]
+    public async Task<ActionResult> DownloadImage(Guid guid)
     {
 
         var existingImage = await _imageStore.GetImage(guid.ToString());
@@ -67,14 +67,13 @@ public class ImageController : ControllerBase
 
         BlobClient blobClient = new BlobClient(_connectionString, "image",
             string.Concat(guid.ToString(), ".png"));
-        ;
 
         using (var stream = new MemoryStream())
         {
             await blobClient.DownloadToAsync(stream);
             stream.Position = 0;
             var contentType = (await blobClient.GetPropertiesAsync()).Value.ContentType;
-            return File(stream.ToArray(), contentType, blobClient.Name);
+            return new FileContentResult(stream.ToArray(), "image/png");
         }
     }
 }
