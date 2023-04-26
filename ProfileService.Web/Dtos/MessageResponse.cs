@@ -1,3 +1,6 @@
-﻿namespace ProfileService.Web.Dtos;
+﻿using Newtonsoft.Json;
 
-public record MessageResponse(List<GetMessageResponse> Messages, string? NextUri);
+namespace ProfileService.Web.Dtos;
+
+public record MessageResponse(
+    [JsonProperty("Messages")] List<GetMessageResponse> Messages, string? NextUri);

@@ -1,3 +1,4 @@
+using System.Net;
 using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using ProfileService.Web.Dtos;
@@ -86,7 +87,7 @@ public class ConversationController : ControllerBase
 
         if (existingProfile == null)
         {
-            return NotFound($"A user with username {message.senderUsername} doesn't exist");
+                return NotFound($"A user with username {message.senderUsername} doesn't exist");
         }
 
         var existingConversation = await _conversationStore.GetConversations(message.senderUsername);
@@ -129,12 +130,11 @@ public class ConversationController : ControllerBase
 
     [HttpGet("{conversationId}/messages")]
     public async Task<ActionResult<MessageResponse?>> GetMessages(string conversationId,
-        [FromQuery] int limit = 50, [FromQuery] string? continuationtoken = null, [FromQuery] long lastSeenMessageTime = 0)
+        [FromQuery] int? limit, [FromQuery] string? continuationtoken, [FromQuery] long lastSeenMessageTime)
     {
-        var decodedContinuationToken = HttpUtility.UrlDecode(continuationtoken);
-        var messagesToken = await _messageStore.GetMessages(limit , decodedContinuationToken, conversationId, lastSeenMessageTime);
+        var messagesToken = await _messageStore.GetMessages(limit , continuationtoken, conversationId, lastSeenMessageTime.ToString());
         if (messagesToken.messages.Count == 0) return NotFound($"There is no conversation with Conversation ID = {conversationId}");
-        var messageResponse = _conversationService.GetMessages(messagesToken.messages, messagesToken.continuationToken, conversationId, limit);
+        var messageResponse = _conversationService.GetMessages(messagesToken.messages, messagesToken.continuationToken, conversationId, limit, lastSeenMessageTime);
         return Ok(messageResponse);
     }
 }

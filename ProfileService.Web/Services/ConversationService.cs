@@ -8,7 +8,7 @@ namespace ProfileService.Web.Services;
 
 public class ConversationService : IConversationService
 {
-    public MessageResponse GetMessages(List<Message> messages, string? continuationToken, string conversationId, int limit)
+    public MessageResponse GetMessages(List<Message> messages, string? continuationToken, string conversationId, int? limit, long lastseenmessagetime)
     {
         var getMessageResponse = new List<GetMessageResponse>();
         foreach (var message in messages)
@@ -18,15 +18,15 @@ public class ConversationService : IConversationService
             );
         }
 
-        var list = getMessageResponse.OrderByDescending(message => message.UnixTime).ToList();
-        var nextUri = $"/api/conversations/{conversationId}/messages?limit={limit}";
+        var nextUri = $"/api/conversations/{conversationId}/messages";
+        if (limit != null) nextUri += $"?limit={limit}";
         if (continuationToken != null)
         {
             var encodedContinuationToken = WebUtility.UrlEncode(continuationToken);
-            var adjustedContinuationToken = Uri.EscapeDataString(encodedContinuationToken);
-            nextUri += $"&continuationToken={adjustedContinuationToken}";
+            nextUri += $"&continuationToken={encodedContinuationToken}";
         }
-        var messageResponse = new MessageResponse(list, nextUri);
+        if (lastseenmessagetime > 0) nextUri += $"&lastSeenMessageTime={lastseenmessagetime}";
+        var messageResponse = new MessageResponse(getMessageResponse, nextUri);
         return messageResponse;
     }
 }

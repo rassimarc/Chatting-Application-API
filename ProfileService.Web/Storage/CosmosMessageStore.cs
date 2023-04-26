@@ -32,10 +32,10 @@ public class CosmosMessageStore : IMessageStore
     }
 
 
-    public async Task<(List<Message> messages, string? continuationToken)> GetMessages(int pageSize,
-        string? continuationToken, string? conversationId, long lastSeenMessageTime)
+    public async Task<(List<Message> messages, string? continuationToken)> GetMessages(int? pageSize,
+        string? continuationToken, string? conversationId, string lastSeenMessageTime)
     {
-        var queryText = "SELECT * FROM c WHERE c.partitionKey = @conversationId AND c.time > @lastSeenMessageTime";
+        var queryText = "SELECT * FROM c WHERE c.partitionKey = @conversationId AND c.time > @lastSeenMessageTime ORDER BY c.time DESC";
         var queryDefinition = new QueryDefinition(queryText)
             .WithParameter("@conversationId", conversationId)
             .WithParameter("@lastSeenMessageTime", lastSeenMessageTime);
