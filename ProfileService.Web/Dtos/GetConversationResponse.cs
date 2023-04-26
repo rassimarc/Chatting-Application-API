@@ -1,9 +1,7 @@
-﻿using Microsoft.Azure.Cosmos.Serialization.HybridRow;
-
-namespace ProfileService.Web.Dtos;
+﻿namespace ProfileService.Web.Dtos;
 
 public record GetConversationResponse(
-    Guid conversationId,
-    long LastModifiedGuidTime,
-    Profile recipients
+        Guid Id,
+        long LastModifiedUnixTime,
+        Profile Recipient 
     );
