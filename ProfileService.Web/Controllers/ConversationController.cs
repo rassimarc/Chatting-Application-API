@@ -23,7 +23,7 @@ public class ConversationController : ControllerBase
         _messageStore = messageStore;
         _conversationService = conversationService;
     }
-/*
+
     [HttpPost]
     public async Task<ActionResult<ConversationResponse>> AddConversation(ConversationRequest conversation)
     {
@@ -79,7 +79,7 @@ public class ConversationController : ControllerBase
         return CreatedAtAction(nameof(GetConversations), new { username = conversation.participants[0] },
             conversationresponse);
     }
-    */
+
     [HttpPost("{conversationId}")]
     public async Task<ActionResult<ConversationResponse>> AddMessage(SendMessageRequest message, Guid conversationId)
     {

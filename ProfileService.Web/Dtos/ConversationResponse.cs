@@ -1,3 +1,8 @@
+using Microsoft.Azure.Cosmos.Serialization.HybridRow;
+
 namespace ProfileService.Web.Dtos;
 
-public record ConversationResponse(List<GetConversationResponse> Messages, string? NextUri);
+public record ConversationResponse(
+    Guid conversationId,
+    long createdUnixTime
+);
