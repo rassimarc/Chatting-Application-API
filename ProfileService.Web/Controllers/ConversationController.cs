@@ -119,12 +119,14 @@ public class ConversationController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult<List<Conversation>>> GetConversations([FromQuery] string username)
+    public async Task<ActionResult<ConversationResponse?>> GetConversations(string username,
+        [FromQuery] int limit = 50, [FromQuery] string? continuationtoken = null, [FromQuery] long lastSeenMessageTime = 0)
     {
-        var profile = await _profileStore.GetProfile(username);
-        if (profile == null) return NotFound($"There is no profile with username: {username}");
-        var conversations = await _conversationStore.GetConversations(username);
-        return Ok(conversations);
+        var decodedContinuationToken = HttpUtility.UrlDecode(continuationtoken);
+        var conversationToken = await _conversationStore.GetConversations(limit , decodedContinuationToken, username, lastSeenMessageTime);
+        if (conversationToken.messages.Count == 0) return NotFound($"There is no conversation with Conversation ID = {conversationId}");
+        var messageResponse = _conversationService.GetMessages(messagesToken.messages, messagesToken.continuationToken, conversationId, limit);
+        return Ok(messageResponse);
     }
 
 
