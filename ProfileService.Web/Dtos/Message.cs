@@ -3,7 +3,7 @@
 namespace ProfileService.Web.Dtos;
 
 public record Message(
-    string messageId,
+    string? messageId,
     Guid conversationId,
     string senderUsername,
     string text,

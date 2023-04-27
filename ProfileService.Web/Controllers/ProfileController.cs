@@ -25,22 +25,7 @@ public class ProfileController : ControllerBase
         {
             return Conflict($"A user with username {profile.username} already exists");
         }
-        var existingImage = await _imageStore.GetImage(profile.ProfilePictureId.ToString());
         
-        if (existingImage == null)
-        {
-            Guid guid = new Guid("3f7c9a85-1825-499f-92fb-c46882afbea2");
-            var profile1 = new Profile(
-                profile.username,
-                profile.firstName,
-                profile.lastName,
-                guid
-            );
-            await _profileStore.UpsertProfile(profile1);
-            return NotFound("The image you are trying to put cannot be found," +
-                            " please try uploading it again and update your profile. " +
-                            "Default profile picture has been set.");
-        }
         await _profileStore.UpsertProfile(profile);
         return CreatedAtAction(nameof(GetProfile), new { username = profile.username },
             profile);
@@ -74,7 +59,7 @@ public class ProfileController : ControllerBase
             return NotFound("The image you are trying to upload cannot be found. Please try uploading it again.");
         }
         
-        var profile = new Profile(username, request.firstName, request.lastName, request.ProfilePictureId);
+        var profile = new Profile(username, request.firstName, request.lastName, request.ProfilePictureId.ToString());
         await _profileStore.UpsertProfile(profile);
         return Ok(profile);
     }

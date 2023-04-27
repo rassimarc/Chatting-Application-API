@@ -38,7 +38,7 @@ public class ConversationController : ControllerBase
         }
         
         if (conversation.firstMessage.text.Length == 0 ||
-            conversation.participants.Count != 2)
+            conversation.participants.Length != 2)
         {
             return BadRequest("Invalid message, please try again.");
         }
@@ -55,7 +55,7 @@ public class ConversationController : ControllerBase
 
         long time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         var conversationId = Guid.NewGuid();
-        
+        string messageid;
         var message = new Message(
             conversation.firstMessage.messageId,
             conversationId,
@@ -65,12 +65,12 @@ public class ConversationController : ControllerBase
         );
         
         var conversationdb = new Conversation(
-            conversationId,
+            conversationId.ToString(),
             time,
             conversation.participants
         );
         var conversationresponse = new ConversationResponse(
-            conversationId,
+            conversationId.ToString(),
             time
         );
         await _conversationStore.UpsertConversation(conversationdb);

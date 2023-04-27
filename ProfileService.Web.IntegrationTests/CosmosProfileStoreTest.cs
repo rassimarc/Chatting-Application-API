@@ -13,7 +13,7 @@ public class CosmosProfileStoreTest : IClassFixture<WebApplicationFactory<Progra
         username: "FooBar",
         firstName: "Foo",
         lastName: "Bar",
-        ProfilePictureId: Guid.NewGuid()
+        ProfilePictureId: Guid.NewGuid().ToString()
     );
     
     public Task InitializeAsync()

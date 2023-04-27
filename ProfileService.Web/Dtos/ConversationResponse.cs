@@ -3,6 +3,6 @@ using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 namespace ProfileService.Web.Dtos;
 
 public record ConversationResponse(
-    Guid conversationId,
+    string conversationId,
     long createdUnixTime
 );

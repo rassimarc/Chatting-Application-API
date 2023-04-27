@@ -75,7 +75,7 @@ public class CosmosConversationStore : IConversationStore
     {
         return new ConversationEntity(
             partitionKey: conversation.participants[participant],
-            id: conversation.conversationId.ToString(),
+            id: conversation.conversationId,
             conversation.lastModified.ToString(),    
             conversation.participants
         );
@@ -84,9 +84,10 @@ public class CosmosConversationStore : IConversationStore
     private static Conversation toConversation(ConversationEntity entity)
     {
         return new Conversation(
-            conversationId: new Guid(entity.id),
-             long.Parse(entity.lastModified),
-        new List<string> {entity.participants[0],entity.participants[1]}
+            conversationId: new Guid(entity.id).ToString(),
+            lastModified: long.Parse(entity.lastModified),
+            participants: new string[] { entity.participants[0], entity.participants[1] }
         );
+
     }
 }

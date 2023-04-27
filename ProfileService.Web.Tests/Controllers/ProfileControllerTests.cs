@@ -30,7 +30,7 @@ public class ProfileControllerTests : IClassFixture<WebApplicationFactory<Progra
         username: "FooBar",
         firstName: "Foo",
         lastName: "Bar",
-        ProfilePictureId: Guid.NewGuid()
+        ProfilePictureId: Guid.NewGuid().ToString()
     );
 
     [Fact]
@@ -72,7 +72,7 @@ public class ProfileControllerTests : IClassFixture<WebApplicationFactory<Progra
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         
         _profileStoreMock.Verify(x => x.GetProfile(_profile.username), Times.Once);
-        _profileStoreMock.Verify(x => x.UpsertProfile(It.Is<Profile>(p => p.username == _profile.username && p.firstName == _profile.firstName && p.lastName == _profile.lastName && p.ProfilePictureId == new Guid("3f7c9a85-1825-499f-92fb-c46882afbea2"))), Times.Once);
+        _profileStoreMock.Verify(x => x.UpsertProfile(It.Is<Profile>(p => p.username == _profile.username && p.firstName == _profile.firstName && p.lastName == _profile.lastName && p.ProfilePictureId == "3f7c9a85-1825-499f-92fb-c46882afbea2")), Times.Once);
         
     }
 
@@ -98,7 +98,7 @@ public class ProfileControllerTests : IClassFixture<WebApplicationFactory<Progra
     [InlineData("foobar", "   ", "Bar", "{3f7c9a85-1825-499f-92fb-c46882afbea2}")]
     [InlineData("foobar", "Foo", "", "{3fa85f64-5717-4562-b3fc-2c963f66afa6}")]
     [InlineData("foobar", "Foo", " ", "{3f7c9a85-1825-499f-92fb-c46882afbea2}")]
-    public async Task AddProfile_InvalidArgs(string username, string firstName, string lastName, Guid profilePictureId)
+    public async Task AddProfile_InvalidArgs(string username, string firstName, string lastName, string profilePictureId)
     {
         var profile = new Profile(username, firstName, lastName, profilePictureId);
         var response = await _httpClient.PostAsync("/Profile",
@@ -111,7 +111,7 @@ public class ProfileControllerTests : IClassFixture<WebApplicationFactory<Progra
     [Fact]
     public async Task AddProfile_InvalidArgsGuid ()
     {
-        var updatedProfile = _profile with {ProfilePictureId = Guid.Empty};
+        var updatedProfile = _profile with {ProfilePictureId = ""};
         var response = await _httpClient.PostAsync("/Profile",
             new StringContent(JsonConvert.SerializeObject(updatedProfile), Encoding.Default, "application/json"));
     
