@@ -39,7 +39,6 @@ public class ProfileControllerTests : IClassFixture<WebApplicationFactory<Progra
         
         _profileStoreMock.Setup(m => m.GetProfile(_profile.username))
             .ReturnsAsync(_profile);
-
         var response = await _httpClient.GetAsync($"/Profile/{_profile.username}");
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         var json = await response.Content.ReadAsStringAsync();
@@ -51,7 +50,6 @@ public class ProfileControllerTests : IClassFixture<WebApplicationFactory<Progra
     {
         _profileStoreMock.Setup(m => m.GetProfile("foobar"))
             .ReturnsAsync((Profile?)null);
-
         var response = await _httpClient.GetAsync($"/Profile/foobar");
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }

@@ -53,6 +53,10 @@ public class CosmosProfileStore : IProfileStore
             throw;
         }
     }
+    
+// ConsistencyLevel.Strong - This level provides strong consistency, which means that all replicas will have the same data at all times. This level is appropriate for applications that require the highest level of consistency, but it can also have an impact on performance and availability.
+// ConsistencyLevel.Session - This level provides consistency within a session, which means that all operations within a session will see their own updates in the order they were performed. This level is appropriate for applications that require low-latency and high throughput, while still maintaining a reasonable level of consistency.
+// ConsistencyLevel.Eventual - This level provides eventual consistency, which means that all replicas will eventually converge to the same state, but there may be some lag in the data. This level is appropriate for applications that can tolerate some inconsistency or lag in the data, and prioritize high availability and partition tolerance over strong consistency.
 
     public async Task DeleteProfile(string username)
     {
@@ -95,3 +99,27 @@ public class CosmosProfileStore : IProfileStore
         );
     }
 }
+
+/*          In Memory Profile Store
+
+using ProfileService.Web.Controllers;
+using ProfileService.Web.Dtos;
+namespace ProfileService.Web.Storage;
+
+public class InMemoryProfileStore : IProfileStore
+{
+    private readonly Dictionary<string, Profile> _profiles = new();
+        
+    public Task UpsertProfile(Profile profile)
+    {
+        _profiles[profile.Username] = profile;
+        return Task.CompletedTask;
+    }
+
+    public Task<Profile?> GetProfile(string username)
+    {
+        if (!_profiles.ContainsKey(username)) return Task.FromResult<Profile?>(null);
+        return Task.FromResult<Profile?>(_profiles[username]);
+    }
+}
+*/
