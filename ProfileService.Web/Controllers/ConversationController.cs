@@ -58,7 +58,7 @@ public class ConversationController : ControllerBase
         string messageid;
         var message = new Message(
             conversation.FirstMessage.messageId,
-            conversationId,
+            conversationId.ToString(),
             conversation.FirstMessage.senderUsername,
             conversation.FirstMessage.text,
             time
@@ -81,7 +81,7 @@ public class ConversationController : ControllerBase
     }
 
     [HttpPost("{conversationId}")]
-    public async Task<ActionResult<ConversationResponse>> AddMessage(SendMessageRequest message, Guid conversationId)
+    public async Task<ActionResult<ConversationResponse>> AddMessage(SendMessageRequest message, string conversationId)
     {
         var existingProfile = await _profileStore.GetProfile(message.senderUsername);
 
@@ -93,7 +93,7 @@ public class ConversationController : ControllerBase
         var existingConversation = (await _conversationStore.GetConversations(message.senderUsername, null, null, "0")).conversations;
         if (existingConversation == null)
         {
-            return Conflict($"A Conversation with conversationId {conversationId.ToString()} doesn't exist");
+            return Conflict($"A Conversation with conversationId {conversationId} doesn't exist");
         }
         
         if (message.text.Length == 0)
@@ -113,7 +113,13 @@ public class ConversationController : ControllerBase
         var messageresponse = new SendMessageResponse(
             time
         );
+        var upsertConversation = new Conversation(
+            conversationId,
+            time,
+
+        );
         await _messageStore.AddMessage(messageDb);
+        await _conversationStore.AddConversation()
         return CreatedAtAction(nameof(GetConversations), new { username = message.senderUsername },
             messageresponse);
     }

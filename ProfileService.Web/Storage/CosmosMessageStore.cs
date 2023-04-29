@@ -99,7 +99,7 @@ public class CosmosMessageStore : IMessageStore
     {
         return new Message(
             messageId: entity.id,
-            new Guid(entity.partitionKey),
+            entity.partitionKey,
             entity.senderUsername,
             entity.text,
             long.Parse(entity.time)
