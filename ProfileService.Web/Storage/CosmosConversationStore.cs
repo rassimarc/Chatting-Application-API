@@ -29,13 +29,19 @@ public class CosmosConversationStore : IConversationStore
         await Container.UpsertItemAsync(ToEntity(conversation, 1));
     }
 
-    public async Task<List<Conversation>?> GetConversations(string participant)
+    public async Task<(List<Conversation> conversations, string? continuationToken)> GetConversations(
+        string participant, int? pageSize,
+        string? continuationToken, string lastSeenConversationTime)
     {
         var queryText = "SELECT * FROM c WHERE ARRAY_CONTAINS(c.participants, @participant)";
         var queryDefinition = new QueryDefinition(queryText)
             .WithParameter("@participant", participant);
+            
 
-        var queryResultSetIterator = Container.GetItemQueryIterator<ConversationEntity>(queryDefinition);
+        var queryResultSetIterator = Container.GetItemQueryIterator<ConversationEntity>(queryDefinition, requestOptions: new QueryRequestOptions()
+        {
+            MaxItemCount = pageSize
+        }, continuationToken: continuationToken);
 
         var conversations = new List<Conversation>();
         while (queryResultSetIterator.HasMoreResults)
@@ -45,10 +51,16 @@ public class CosmosConversationStore : IConversationStore
             {
                 var conversation = toConversation(entity);
                 conversations.Add(conversation);
+                
+                if (conversations.Count == pageSize)
+                {
+                    continuationToken = queryResponse.ContinuationToken;
+                    break;
+                }
             }
         }
-
-        return conversations;
+        if (conversations.Count != pageSize) continuationToken = null;
+        return (conversations, continuationToken);
     }
     
     public async Task DeleteConversation(string participant, string conversationId)

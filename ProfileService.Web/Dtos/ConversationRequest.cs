@@ -5,6 +5,6 @@ using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 namespace ProfileService.Web.Dtos;
 
 public record ConversationRequest(
-    [Required] string[] participants,
-    [Required] SendMessageRequest firstMessage
+    [Required] string[] Participants,
+    [Required] SendMessageRequest FirstMessage
 );

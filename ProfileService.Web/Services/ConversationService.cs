@@ -22,8 +22,8 @@ public class ConversationService : IConversationService
         if (limit != null) nextUri += $"?limit={limit}";
         if (continuationToken != null)
         {
-            var encodedContinuationToken = WebUtility.UrlEncode(continuationToken);
-            nextUri += $"&continuationToken={encodedContinuationToken}";
+            continuationToken = WebUtility.UrlEncode(continuationToken);
+            nextUri += $"&continuationToken={continuationToken}";
         }
         if (lastseenmessagetime > 0) nextUri += $"&lastSeenMessageTime={lastseenmessagetime}";
         var messageResponse = new MessageResponse(getMessageResponse, nextUri);
