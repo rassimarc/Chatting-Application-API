@@ -1,5 +1,7 @@
 ﻿using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using ProfileService.Web.Configuration;
 using ProfileService.Web.Dtos;
 using ProfileService.Web.Storage;
 
@@ -9,36 +11,26 @@ namespace ProfileService.Web.Controllers;
 [Route("api/images")]
 public class ImageController : ControllerBase
 {
-    //Trying to create a Blob Client
-    private string _connectionString =
-        "DefaultEndpointsProtocol=https;AccountName=imageuploadstorages;AccountKey=ugqKduEzlHm802VFttk+wVq2UjEdl1QqeEoZCbPC5pTBvEFmPpKbujPPmi4RxG99c8FBxR40Tuih+ASts7/Kqg==;EndpointSuffix=core.windows.net";
-
+    private readonly ConnectionStrings _connectionString;
     private readonly IImageStore _imageStore;
 
-    public ImageController(IImageStore imageStore)
+    public ImageController(IImageStore imageStore, IOptions<ConnectionStrings> connectionStrings)
     {
         _imageStore = imageStore;
+        _connectionString = connectionStrings.Value;
     }
 
     [HttpPost]
     public async Task<ActionResult<UploadImageResponse>> UploadImage([FromForm] UploadImageRequest request)
     {
         {
-            //guid associated with file
             var guid = Guid.NewGuid();
-            BlobContainerClient blobContainerClient = new BlobContainerClient(_connectionString, "image");
+            BlobContainerClient blobContainerClient = new BlobContainerClient(_connectionString.ImageUploadStorage, "image");
             string fileName = null;
             var requestFiles = Request.Form.Files;
             foreach (IFormFile file in requestFiles)
             {
                 fileName = file.FileName;
-                string extension = Path.GetExtension(fileName);
-                /*
-                if (extension != ".png" && !extension.Equals(".jpg"))
-                {
-                    throw new FormatException("The submitted file must be of type png or jpg.");
-                }
-*/
                 using (var stream = new MemoryStream())
                 {
                     await request.File.CopyToAsync(stream);
@@ -47,13 +39,11 @@ public class ImageController : ControllerBase
                     await blobContainerClient.UploadBlobAsync(name, stream);
                 }
             }
-
             var image = new Image(guid.ToString());
             await _imageStore.UpsertImage(image);
             return Ok(new UploadImageResponse(guid.ToString()));
         }
     }
-
 
     [HttpGet("{guid}")]
     public async Task<ActionResult> DownloadImage(Guid guid)
@@ -65,7 +55,7 @@ public class ImageController : ControllerBase
             return NotFound("The image you are trying to download cannot be found. Please try another guid.");
         }
 
-        BlobClient blobClient = new BlobClient(_connectionString, "image",
+        BlobClient blobClient = new BlobClient(_connectionString.ImageUploadStorage, "image",
             string.Concat(guid.ToString(), ".png"));
 
         using (var stream = new MemoryStream())

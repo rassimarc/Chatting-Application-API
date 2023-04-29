@@ -1,10 +1,7 @@
-using System.Net;
-using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using ProfileService.Web.Dtos;
 using ProfileService.Web.Services;
 using ProfileService.Web.Storage;
-
 namespace ProfileService.Web.Controllers;
 
 [ApiController]
@@ -37,18 +34,18 @@ public class ConversationController : ControllerBase
                             $" or {conversation.Participants[1]} doesn't exist");
         }
         
-        if (conversation.FirstMessage.text.Length == 0 ||
+        if (conversation.FirstMessage.Text.Length == 0 ||
             conversation.Participants.Length != 2)
         {
             return BadRequest("Invalid message, please try again.");
         }
         
-        foreach (var UserConversations in conversations)
+        foreach (var userConversations in conversations)
         {
-            if ((UserConversations.participants[0] == conversation.Participants[0] &&
-                 UserConversations.participants[1] == conversation.Participants[1]) ||
-                (UserConversations.participants[0] == conversation.Participants[1] &&
-                 UserConversations.participants[1] == conversation.Participants[0]))
+            if ((userConversations.participants[0] == conversation.Participants[0] &&
+                 userConversations.participants[1] == conversation.Participants[1]) ||
+                (userConversations.participants[0] == conversation.Participants[1] &&
+                 userConversations.participants[1] == conversation.Participants[0]))
                 return Conflict($"A conversation between {existingProfile1.username} " +
                                 $"and {existingProfile2.username} already exists.");
         }
@@ -57,10 +54,10 @@ public class ConversationController : ControllerBase
         var conversationId = Guid.NewGuid();
         string messageid;
         var message = new Message(
-            conversation.FirstMessage.messageId,
+            conversation.FirstMessage.Id,
             conversationId.ToString(),
-            conversation.FirstMessage.senderUsername,
-            conversation.FirstMessage.text,
+            conversation.FirstMessage.SenderUsername,
+            conversation.FirstMessage.Text,
             time
         );
         
@@ -69,10 +66,12 @@ public class ConversationController : ControllerBase
             time,
             conversation.Participants
         );
+        
         var conversationresponse = new ConversationResponse(
             conversationId.ToString(),
             time
         );
+        
         await _conversationStore.AddConversation(conversationdb);
         await _messageStore.AddMessage(message);
 
@@ -80,80 +79,71 @@ public class ConversationController : ControllerBase
             conversationresponse);
     }
 
-    [HttpPost("{conversationId}")]
+    [HttpPost("{conversationId}/messages")]
     public async Task<ActionResult<ConversationResponse>> AddMessage(SendMessageRequest message, string conversationId)
     {
-        var existingProfile = await _profileStore.GetProfile(message.senderUsername);
+        var existingProfile = await _profileStore.GetProfile(message.SenderUsername);
 
         if (existingProfile == null)
         {
-                return NotFound($"A user with username {message.senderUsername} doesn't exist");
+                return NotFound($"A user with username {message.SenderUsername} doesn't exist");
         }
 
-        var existingConversation = (await _conversationStore.GetConversations(message.senderUsername, null, null, "0")).conversations;
+        var existingConversation = await _conversationStore.GetConversation(message.SenderUsername, conversationId);
+        
         if (existingConversation == null)
         {
             return Conflict($"A Conversation with conversationId {conversationId} doesn't exist");
         }
         
-        if (message.text.Length == 0)
+        if (message.Text.Length == 0)
         {
             return BadRequest("Invalid message, please try again.");
         }
 
+        var existingMessages = (await _messageStore.GetMessages(null, null, conversationId, "0")).messages;
+
+        foreach (var messageId in existingMessages)
+        {
+            if (messageId.messageId == message.Id)
+            {
+                return Conflict($"A message with Id = {message.Id} already exists");
+            }
+        }
         long time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         var messageDb = new Message(
-            message.messageId,
+            message.Id,
             conversationId,
-            message.senderUsername,
-            message.text,
+            message.SenderUsername,
+            message.Text,
             time
         );
 
         var messageresponse = new SendMessageResponse(
             time
         );
+        
         var upsertConversation = new Conversation(
             conversationId,
             time,
-
+            existingConversation.participants
         );
         await _messageStore.AddMessage(messageDb);
-        await _conversationStore.AddConversation()
-        return CreatedAtAction(nameof(GetConversations), new { username = message.senderUsername },
+        await _conversationStore.AddConversation(upsertConversation);
+        return CreatedAtAction(nameof(GetConversations), new { username = message.SenderUsername },
             messageresponse);
     }
     
     [HttpGet]
-    public async Task<ActionResult<ConversationResponse>> GetConversations([FromQuery] string username,
+    public async Task<ActionResult<GetConversationResponse>> GetConversations([FromQuery] string username,
         [FromQuery] int? limit, [FromQuery] string? continuationtoken, [FromQuery] long lastSeenConversationTime)
     {
         var profile = await _profileStore.GetProfile(username);
         if (profile == null) return NotFound($"There is no profile with username: {username}");
         var getConversationResponse = await _conversationStore.GetConversations(username, limit, continuationtoken, lastSeenConversationTime.ToString());
         var conversations = getConversationResponse.conversations;
-        var conversationResponseList = new List<ListConversationsResponseItem>();
-        string participant;
-        foreach (var conversation in conversations)
-        {
-            if (conversation.participants[0] == username) participant = conversation.participants[1];
-            else participant = conversation.participants[0];
-            conversationResponseList.Add(new ListConversationsResponseItem
-                (conversation.conversationId,
-                    conversation.lastModified,
-                    await _profileStore.GetProfile(participant)
-                    )
-            );
-        }
-        var nextUri = $"/api/conversations?username={username}";
-        if (limit != null) nextUri += $"&limit={limit}";
-        if (getConversationResponse.continuationToken != null)
-        {
-            continuationtoken = WebUtility.UrlEncode(getConversationResponse.continuationToken);
-            nextUri += $"&continuationToken={continuationtoken}";
-        }
-        if (lastSeenConversationTime > 0) nextUri += $"&lastSeenConversationTime={lastSeenConversationTime}";
-        var conversationResponse = new GetConversationResponse(conversationResponseList, nextUri);
+        var conversationResponse = await _conversationService.GetConversations(conversations, username, limit,
+            getConversationResponse.continuationToken, lastSeenConversationTime);
         return Ok(conversationResponse);
     }
 
