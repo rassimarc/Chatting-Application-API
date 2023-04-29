@@ -34,7 +34,7 @@ public class CosmosProfileStoreTest : IClassFixture<WebApplicationFactory<Progra
     [Fact]
     public async Task AddNewProfile()
     {
-        await _store.UpsertProfile(_profile);
+        await _store.AddProfile(_profile);
         Assert.Equal(_profile, await _store.GetProfile(_profile.username));
     }
 

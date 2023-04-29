@@ -62,7 +62,7 @@ public class ProfileControllerTests : IClassFixture<WebApplicationFactory<Progra
 
         _profileStoreMock.Setup(m => m.GetProfile(_profile.username))
             .ReturnsAsync((Profile?)null);
-        _profileStoreMock.Setup(x => x.UpsertProfile(It.IsAny<Profile>())).Returns(Task.CompletedTask);
+        _profileStoreMock.Setup(x => x.AddProfile(It.IsAny<Profile>())).Returns(Task.CompletedTask);
 
         _imageStoreMock.Setup(m => m.GetImage(_profile.ProfilePictureId.ToString()))
             .ReturnsAsync((Image?)null);
@@ -70,7 +70,7 @@ public class ProfileControllerTests : IClassFixture<WebApplicationFactory<Progra
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         
         _profileStoreMock.Verify(x => x.GetProfile(_profile.username), Times.Once);
-        _profileStoreMock.Verify(x => x.UpsertProfile(It.Is<Profile>(p => p.username == _profile.username && p.firstName == _profile.firstName && p.lastName == _profile.lastName && p.ProfilePictureId == "3f7c9a85-1825-499f-92fb-c46882afbea2")), Times.Once);
+        _profileStoreMock.Verify(x => x.AddProfile(It.Is<Profile>(p => p.username == _profile.username && p.firstName == _profile.firstName && p.lastName == _profile.lastName && p.ProfilePictureId == "3f7c9a85-1825-499f-92fb-c46882afbea2")), Times.Once);
         
     }
 
@@ -84,7 +84,7 @@ public class ProfileControllerTests : IClassFixture<WebApplicationFactory<Progra
             new StringContent(JsonConvert.SerializeObject(_profile), Encoding.Default, "application/json"));
         Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
         
-        _profileStoreMock.Verify(m => m.UpsertProfile(_profile), Times.Never);
+        _profileStoreMock.Verify(m => m.AddProfile(_profile), Times.Never);
     }
 
     [Theory]
@@ -103,7 +103,7 @@ public class ProfileControllerTests : IClassFixture<WebApplicationFactory<Progra
             new StringContent(JsonConvert.SerializeObject(profile), Encoding.Default, "application/json"));
     
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-        _profileStoreMock.Verify(mock => mock.UpsertProfile(profile), Times.Never);
+        _profileStoreMock.Verify(mock => mock.AddProfile(profile), Times.Never);
     }
     
     [Fact]
@@ -114,7 +114,7 @@ public class ProfileControllerTests : IClassFixture<WebApplicationFactory<Progra
             new StringContent(JsonConvert.SerializeObject(updatedProfile), Encoding.Default, "application/json"));
     
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
-        _profileStoreMock.Verify(mock => mock.UpsertProfile(updatedProfile), Times.Never);
+        _profileStoreMock.Verify(mock => mock.AddProfile(updatedProfile), Times.Never);
     }
 
     // [Fact]

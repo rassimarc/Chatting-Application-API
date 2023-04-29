@@ -4,7 +4,7 @@ namespace ProfileService.Web.Storage;
 
 public interface IConversationStore
 {
-    Task UpsertConversation(Conversation conversation);
+    Task AddConversation(Conversation conversation);
     Task<(List<Conversation> conversations, string? continuationToken)> GetConversations(string participant,
         int? pageSize,
         string? continuationToken, string lastSeenMessageTime);

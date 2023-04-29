@@ -26,7 +26,7 @@ public class ProfileController : ControllerBase
             return Conflict($"A user with username {profile.username} already exists");
         }
         
-        await _profileStore.UpsertProfile(profile);
+        await _profileStore.AddProfile(profile);
         return CreatedAtAction(nameof(GetProfile), new { username = profile.username },
             profile);
     }
@@ -60,7 +60,7 @@ public class ProfileController : ControllerBase
         }
         
         var profile = new Profile(username, request.firstName, request.lastName, request.ProfilePictureId.ToString());
-        await _profileStore.UpsertProfile(profile);
+        await _profileStore.AddProfile(profile);
         return Ok(profile);
     }
 }

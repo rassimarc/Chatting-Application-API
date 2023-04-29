@@ -73,8 +73,8 @@ public class ConversationController : ControllerBase
             conversationId.ToString(),
             time
         );
-        await _conversationStore.UpsertConversation(conversationdb);
-        await _messageStore.UpsertMessage(message);
+        await _conversationStore.AddConversation(conversationdb);
+        await _messageStore.AddMessage(message);
 
         return CreatedAtAction(nameof(GetConversations), new { username = conversation.Participants[0] },
             conversationresponse);
@@ -113,7 +113,7 @@ public class ConversationController : ControllerBase
         var messageresponse = new SendMessageResponse(
             time
         );
-        await _messageStore.UpsertMessage(messageDb);
+        await _messageStore.AddMessage(messageDb);
         return CreatedAtAction(nameof(GetConversations), new { username = message.senderUsername },
             messageresponse);
     }

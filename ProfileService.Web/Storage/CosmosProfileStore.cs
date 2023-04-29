@@ -15,7 +15,7 @@ public class CosmosProfileStore : IProfileStore
     }
 
     private Container Container => _cosmosClient.GetDatabase("ContainerProfile").GetContainer("ContainerProfile");
-    public async Task UpsertProfile(Profile profile)
+    public async Task AddProfile(Profile profile)
     {
         if (profile == null ||
             string.IsNullOrWhiteSpace(profile.username) ||

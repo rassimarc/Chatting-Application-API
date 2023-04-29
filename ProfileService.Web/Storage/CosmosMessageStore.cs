@@ -15,7 +15,7 @@ public class CosmosMessageStore : IMessageStore
 
     private Container Container => _cosmosClient.GetDatabase("ConversationMessages").GetContainer("ConversationMessages");
 
-    public async Task UpsertMessage(Message message)
+    public async Task AddMessage(Message message)
     {
         if (message == null ||
             string.IsNullOrWhiteSpace(message.senderUsername) ||
