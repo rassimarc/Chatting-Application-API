@@ -73,8 +73,8 @@ public class ConversationController : ControllerBase
             conversationId.ToString(),
             time
         );
-        await _conversationStore.UpsertConversation(conversationdb);
-        await _messageStore.UpsertMessage(message);
+        await _conversationStore.AddConversation(conversationdb);
+        await _messageStore.AddMessage(message);
 
         return CreatedAtAction(nameof(GetConversations), new { username = conversation.Participants[0] },
             conversationresponse);
@@ -113,7 +113,7 @@ public class ConversationController : ControllerBase
         var messageresponse = new SendMessageResponse(
             time
         );
-        await _messageStore.UpsertMessage(messageDb);
+        await _messageStore.AddMessage(messageDb);
         return CreatedAtAction(nameof(GetConversations), new { username = message.senderUsername },
             messageresponse);
     }
@@ -134,8 +134,9 @@ public class ConversationController : ControllerBase
             else participant = conversation.participants[0];
             conversationResponseList.Add(new ListConversationsResponseItem
                 (conversation.conversationId,
-                    await _profileStore.GetProfile(participant),
-                    conversation.lastModified)
+                    conversation.lastModified,
+                    await _profileStore.GetProfile(participant)
+                    )
             );
         }
         var nextUri = $"/api/conversations?username={username}";
