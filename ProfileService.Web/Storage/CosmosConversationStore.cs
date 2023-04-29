@@ -14,7 +14,7 @@ public class CosmosConversationStore : IConversationStore
     }
 
     private Container Container => _cosmosClient.GetDatabase("ContainerConversations").GetContainer("ContainerConversations");
-    public async Task UpsertConversation(Conversation conversation)
+    public async Task AddConversation(Conversation conversation)
     {
         if (
             conversation == null ||

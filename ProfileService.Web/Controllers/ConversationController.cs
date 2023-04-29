@@ -73,7 +73,7 @@ public class ConversationController : ControllerBase
             conversationId.ToString(),
             time
         );
-        await _conversationStore.UpsertConversation(conversationdb);
+        await _conversationStore.AddConversation(conversationdb);
         await _messageStore.UpsertMessage(message);
 
         return CreatedAtAction(nameof(GetConversations), new { username = conversation.Participants[0] },
