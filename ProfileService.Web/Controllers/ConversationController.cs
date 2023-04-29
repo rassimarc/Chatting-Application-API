@@ -133,9 +133,9 @@ public class ConversationController : ControllerBase
             if (conversation.participants[0] == username) participant = conversation.participants[1];
             else participant = conversation.participants[0];
             conversationResponseList.Add(new ListConversationsResponseItem
-                (conversation.conversationId,
-                    await _profileStore.GetProfile(participant),
-                    conversation.lastModified)
+                (conversation.conversationId,conversation.lastModified,
+                    await _profileStore.GetProfile(participant)
+                    )
             );
         }
         var nextUri = $"/api/conversations?username={username}";

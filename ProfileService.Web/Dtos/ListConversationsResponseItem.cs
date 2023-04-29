@@ -1,3 +1,10 @@
-﻿namespace ProfileService.Web.Dtos;
+﻿using Newtonsoft.Json;
 
-public record ListConversationsResponseItem(string id, Profile recipient, long lastModifiedUnixTime);
+namespace ProfileService.Web.Dtos;
+
+public record ListConversationsResponseItem(
+    [JsonProperty("Id")] string Id,
+    [JsonProperty("LastModifiedUnixTime")] long LastModifiedUnixTime,
+    [JsonProperty("Recipient")] Profile Recipient
+    
+    );
