@@ -15,7 +15,7 @@ public class CosmosProfileStore : IProfileStore
     }
 
     private Container Container => _cosmosClient.GetDatabase("ContainerProfile").GetContainer("ContainerProfile");
-    public async Task UpsertProfile(Profile profile)
+    public async Task AddProfile(Profile profile)
     {
         if (profile == null ||
             string.IsNullOrWhiteSpace(profile.username) ||
@@ -119,6 +119,38 @@ public class InMemoryProfileStore : IProfileStore
     {
         if (!_profiles.ContainsKey(username)) return Task.FromResult<Profile?>(null);
         return Task.FromResult<Profile?>(_profiles[username]);
+    }
+}
+*/
+
+/*                  In Memory Profile Store Tests
+using ProfileService.Web.Dtos;
+using ProfileService.Web.Storage;
+
+namespace ProfileService.Web.Tests.Storage;
+
+public class InMemoryProfileStoreTests
+{
+    private readonly InMemoryProfileStore _store = new();
+    
+    [Fact]
+    public async Task AddNewProfile()
+    {
+        var profile = new Profile(username: "foobar", firstName: "Foo", lastName: "Bar");
+        await _store.UpsertProfile(profile);
+        Assert.Equal(profile, await _store.GetProfile(profile.Username));
+    }
+    
+    [Fact]
+    public async Task UpdateExistingProfile()
+    {
+        var profile = new Profile(username: "foobar", firstName: "Foo", lastName: "Bar");
+        await _store.UpsertProfile(profile);
+
+        var updatedProfile = profile with { FirstName = "Foo1", LastName = "Foo2" };
+        await _store.UpsertProfile(updatedProfile);
+        
+        Assert.Equal(updatedProfile, await _store.GetProfile(profile.Username));
     }
 }
 */
