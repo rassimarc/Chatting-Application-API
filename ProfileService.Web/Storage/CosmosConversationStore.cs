@@ -63,6 +63,28 @@ public class CosmosConversationStore : IConversationStore
         return (conversations, continuationToken);
     }
     
+    public async Task<Conversation?> GetConversation(string participant, string conversationId)
+    {
+        var queryText = "SELECT * FROM c WHERE ARRAY_CONTAINS(c.participants, @participant) AND c.id = @conversationId";
+        var queryDefinition = new QueryDefinition(queryText)
+            .WithParameter("@participant", participant)
+            .WithParameter("@conversationId", conversationId);
+
+        var queryResultSetIterator = Container.GetItemQueryIterator<ConversationEntity>(queryDefinition);
+
+        var queryResponse = await queryResultSetIterator.ReadNextAsync();
+        var entity = queryResponse.FirstOrDefault();
+
+        if (entity == null)
+        {
+            return null;
+        }
+
+        var conversation = toConversation(entity);
+        return conversation;
+    }
+
+    
     public async Task DeleteConversation(string participant, string conversationId)
     {
         try
