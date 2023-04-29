@@ -33,9 +33,10 @@ public class CosmosConversationStore : IConversationStore
         string participant, int? pageSize,
         string? continuationToken, string lastSeenConversationTime)
     {
-        var queryText = "SELECT * FROM c WHERE ARRAY_CONTAINS(c.participants, @participant)";
+        var queryText = "SELECT * FROM c WHERE ARRAY_CONTAINS(c.participants, @participant) AND c.lastModified > @lastSeenConversationTime ORDER BY c.lastModified DESC";
         var queryDefinition = new QueryDefinition(queryText)
-            .WithParameter("@participant", participant);
+            .WithParameter("@participant", participant)
+            .WithParameter("@lastSeenConversationTime", lastSeenConversationTime);
             
 
         var queryResultSetIterator = Container.GetItemQueryIterator<ConversationEntity>(queryDefinition, requestOptions: new QueryRequestOptions()
@@ -51,12 +52,11 @@ public class CosmosConversationStore : IConversationStore
             {
                 var conversation = toConversation(entity);
                 conversations.Add(conversation);
-                
-                if (conversations.Count == pageSize)
-                {
-                    continuationToken = queryResponse.ContinuationToken;
-                    break;
-                }
+            }
+            if (conversations.Count == pageSize)
+            {
+                continuationToken = queryResponse.ContinuationToken;
+                break;
             }
         }
         if (conversations.Count != pageSize) continuationToken = null;

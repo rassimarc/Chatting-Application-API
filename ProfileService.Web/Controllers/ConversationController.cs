@@ -138,8 +138,15 @@ public class ConversationController : ControllerBase
                     conversation.lastModified)
             );
         }
-
-        var conversationResponse = new GetConversationResponse(conversationResponseList, getConversationResponse.continuationToken);
+        var nextUri = $"/api/conversations?username={username}";
+        if (limit != null) nextUri += $"&limit={limit}";
+        if (getConversationResponse.continuationToken != null)
+        {
+            continuationtoken = WebUtility.UrlEncode(getConversationResponse.continuationToken);
+            nextUri += $"&continuationToken={continuationtoken}";
+        }
+        if (lastSeenConversationTime > 0) nextUri += $"&lastSeenConversationTime={lastSeenConversationTime}";
+        var conversationResponse = new GetConversationResponse(conversationResponseList, nextUri);
         return Ok(conversationResponse);
     }
 
