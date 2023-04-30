@@ -1,0 +1,130 @@
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/Microsoft.Azure.Cosmos.ServiceInterop.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/Cosmos.CRTCompat.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/msvcp140.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/vcruntime140.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/vcruntime140_1.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/appsettings.Development.json
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/appsettings.json
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/ProfileService.Web
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/ProfileService.Web.deps.json
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/ProfileService.Web.runtimeconfig.json
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/ProfileService.Web.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/ProfileService.Web.pdb
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/Azure.Core.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/Microsoft.Azure.Cosmos.Client.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/Microsoft.Azure.Cosmos.Core.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/Microsoft.Azure.Cosmos.Direct.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/Microsoft.Azure.Cosmos.Serialization.HybridRow.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/Microsoft.Bcl.AsyncInterfaces.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/Microsoft.Bcl.HashCode.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/Microsoft.OpenApi.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/Microsoft.Win32.SystemEvents.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/Newtonsoft.Json.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/Swashbuckle.AspNetCore.Swagger.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/System.Configuration.ConfigurationManager.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/System.Drawing.Common.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/System.Memory.Data.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/System.Security.Cryptography.ProtectedData.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/System.Security.Permissions.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/System.Windows.Extensions.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/runtimes/win-x64/native/Cosmos.CRTCompat.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/runtimes/win-x64/native/Microsoft.Azure.Cosmos.ServiceInterop.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/runtimes/win-x64/native/msvcp140.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/runtimes/win-x64/native/vcruntime140.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/runtimes/win-x64/native/vcruntime140_1.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/runtimes/unix/lib/net6.0/System.Drawing.Common.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/runtimes/win/lib/net6.0/System.Drawing.Common.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/runtimes/win/lib/net6.0/System.Security.Cryptography.ProtectedData.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/runtimes/win/lib/net6.0/System.Windows.Extensions.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/obj/Debug/net6.0/ProfileService.Web.csproj.AssemblyReference.cache
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/obj/Debug/net6.0/ProfileService.Web.GeneratedMSBuildEditorConfig.editorconfig
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/obj/Debug/net6.0/ProfileService.Web.AssemblyInfoInputs.cache
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/obj/Debug/net6.0/ProfileService.Web.AssemblyInfo.cs
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/obj/Debug/net6.0/ProfileService.Web.csproj.CoreCompileInputs.cache
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/obj/Debug/net6.0/ProfileService.Web.MvcApplicationPartsAssemblyInfo.cs
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/obj/Debug/net6.0/ProfileService.Web.MvcApplicationPartsAssemblyInfo.cache
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/obj/Debug/net6.0/staticwebassets/msbuild.ProfileService.Web.Microsoft.AspNetCore.StaticWebAssets.props
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/obj/Debug/net6.0/staticwebassets/msbuild.build.ProfileService.Web.props
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/obj/Debug/net6.0/staticwebassets/msbuild.buildMultiTargeting.ProfileService.Web.props
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/obj/Debug/net6.0/staticwebassets/msbuild.buildTransitive.ProfileService.Web.props
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/obj/Debug/net6.0/staticwebassets.pack.json
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/obj/Debug/net6.0/staticwebassets.build.json
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/obj/Debug/net6.0/staticwebassets.development.json
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/obj/Debug/net6.0/scopedcss/bundle/ProfileService.Web.styles.css
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/obj/Debug/net6.0/ProfileService.Web.csproj.CopyComplete
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/obj/Debug/net6.0/ProfileService.Web.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/obj/Debug/net6.0/refint/ProfileService.Web.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/obj/Debug/net6.0/ProfileService.Web.pdb
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/obj/Debug/net6.0/ProfileService.Web.genruntimeconfig.cache
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/obj/Debug/net6.0/ref/ProfileService.Web.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/Azure.Storage.Blobs.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/Azure.Storage.Common.dll
+/Users/macbookpro/Downloads/COURSES SPRING 2023/EECE 503E/ProfileService_new/ProfileService.Web/bin/Debug/net6.0/System.IO.Hashing.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\Microsoft.Azure.Cosmos.ServiceInterop.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\Cosmos.CRTCompat.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\msvcp140.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\vcruntime140.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\vcruntime140_1.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\appsettings.Development.json
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\appsettings.json
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\ProfileService.Web.exe
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\ProfileService.Web.deps.json
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\ProfileService.Web.runtimeconfig.json
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\ProfileService.Web.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\ProfileService.Web.pdb
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\Azure.Core.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\Azure.Storage.Blobs.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\Azure.Storage.Common.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\Microsoft.Azure.Cosmos.Client.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\Microsoft.Azure.Cosmos.Core.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\Microsoft.Azure.Cosmos.Direct.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\Microsoft.Azure.Cosmos.Serialization.HybridRow.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\Microsoft.Bcl.HashCode.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\Microsoft.OpenApi.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\System.Drawing.Common.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\System.IO.Hashing.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\System.Memory.Data.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\System.Security.Permissions.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\System.Windows.Extensions.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\runtimes\win-x64\native\Cosmos.CRTCompat.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Azure.Cosmos.ServiceInterop.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\runtimes\win-x64\native\msvcp140.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\runtimes\win-x64\native\vcruntime140.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\runtimes\win-x64\native\vcruntime140_1.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\obj\Debug\net6.0\ProfileService.Web.csproj.AssemblyReference.cache
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\obj\Debug\net6.0\ProfileService.Web.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\obj\Debug\net6.0\ProfileService.Web.AssemblyInfoInputs.cache
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\obj\Debug\net6.0\ProfileService.Web.AssemblyInfo.cs
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\obj\Debug\net6.0\ProfileService.Web.csproj.CoreCompileInputs.cache
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\obj\Debug\net6.0\ProfileService.Web.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\obj\Debug\net6.0\ProfileService.Web.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\obj\Debug\net6.0\staticwebassets\msbuild.ProfileService.Web.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\obj\Debug\net6.0\staticwebassets\msbuild.build.ProfileService.Web.props
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.ProfileService.Web.props
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.ProfileService.Web.props
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\obj\Debug\net6.0\staticwebassets.pack.json
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\obj\Debug\net6.0\staticwebassets.build.json
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\obj\Debug\net6.0\staticwebassets.development.json
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\obj\Debug\net6.0\scopedcss\bundle\ProfileService.Web.styles.css
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\obj\Debug\net6.0\ProfileService.Web.csproj.CopyComplete
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\obj\Debug\net6.0\ProfileService.Web.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\obj\Debug\net6.0\refint\ProfileService.Web.dll
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\obj\Debug\net6.0\ProfileService.Web.pdb
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\obj\Debug\net6.0\ProfileService.Web.genruntimeconfig.cache
+C:\Users\moukh\Downloads\ProfileService_new (1)\ProfileService_new\ProfileService.Web\obj\Debug\net6.0\ref\ProfileService.Web.dll
