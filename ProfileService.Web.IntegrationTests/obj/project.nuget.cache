@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "RYUdt3cGX8thA3Y4w23JBKVRZId80OGxA2O1VzekugkiuJ1fSgzj0GoqrvI/9CE3G8CsE0eooWDunJg5UscByw==",
+  "dgSpecHash": "ri6a4ldPutmD/jAUR5snS9NsyUQI1Gk7Ve6hL9ZQvpef1V6gqZAVZbWvQ/kVqXelJkNvzQ223Tb+aVSkX8xrKQ==",
   "success": true,
   "projectFilePath": "/Users/macbookpro/Downloads/Lab/ProfileService.Web.IntegrationTests/ProfileService.Web.IntegrationTests.csproj",
   "expectedPackageFiles": [
     "/Users/macbookpro/.nuget/packages/azure.core/1.28.0/azure.core.1.28.0.nupkg.sha512",
     "/Users/macbookpro/.nuget/packages/azure.storage.blobs/12.15.0/azure.storage.blobs.12.15.0.nupkg.sha512",
     "/Users/macbookpro/.nuget/packages/azure.storage.common/12.14.0/azure.storage.common.12.14.0.nupkg.sha512",
+    "/Users/macbookpro/.nuget/packages/castle.core/5.1.1/castle.core.5.1.1.nupkg.sha512",
     "/Users/macbookpro/.nuget/packages/coverlet.collector/3.1.2/coverlet.collector.3.1.2.nupkg.sha512",
     "/Users/macbookpro/.nuget/packages/microsoft.aspnetcore.mvc.testing/6.0.13/microsoft.aspnetcore.mvc.testing.6.0.13.nupkg.sha512",
     "/Users/macbookpro/.nuget/packages/microsoft.aspnetcore.testhost/6.0.13/microsoft.aspnetcore.testhost.6.0.13.nupkg.sha512",
@@ -50,6 +51,7 @@
     "/Users/macbookpro/.nuget/packages/microsoft.testplatform.testhost/17.1.0/microsoft.testplatform.testhost.17.1.0.nupkg.sha512",
     "/usr/local/share/dotnet/sdk/NuGetFallbackFolder/microsoft.win32.primitives/4.3.0/microsoft.win32.primitives.4.3.0.nupkg.sha512",
     "/Users/macbookpro/.nuget/packages/microsoft.win32.systemevents/6.0.0/microsoft.win32.systemevents.6.0.0.nupkg.sha512",
+    "/Users/macbookpro/.nuget/packages/moq/4.18.4/moq.4.18.4.nupkg.sha512",
     "/usr/local/share/dotnet/sdk/NuGetFallbackFolder/netstandard.library/1.6.1/netstandard.library.1.6.1.nupkg.sha512",
     "/Users/macbookpro/.nuget/packages/newtonsoft.json/10.0.2/newtonsoft.json.10.0.2.nupkg.sha512",
     "/Users/macbookpro/.nuget/packages/nuget.frameworks/5.11.0/nuget.frameworks.5.11.0.nupkg.sha512",
