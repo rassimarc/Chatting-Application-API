@@ -14,5 +14,8 @@
   &lt;ProjectFile&gt;BF6A5914-EC2A-4915-9F4E-7F9F332CA02F/d:Controllers/f:ConversationControllerTests.cs&lt;/ProjectFile&gt;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c7ceb48c_002Dd5b1_002D4d6b_002D80f1_002De578d207f01e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="AddProfile" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;ProjectFile&gt;BF6A5914-EC2A-4915-9F4E-7F9F332CA02F/d:Controllers/f:ConversationControllerTests.cs&lt;/ProjectFile&gt;
+  &lt;Or&gt;
+    &lt;ProjectFile&gt;BF6A5914-EC2A-4915-9F4E-7F9F332CA02F/d:Controllers/f:ConversationControllerTests.cs&lt;/ProjectFile&gt;
+    &lt;ProjectFile&gt;C2663F5F-EC42-4BE6-8652-1804AAA407EB/f:CosmosConversationStoreTests.cs&lt;/ProjectFile&gt;
+  &lt;/Or&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
