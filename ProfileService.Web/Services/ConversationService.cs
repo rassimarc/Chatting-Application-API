@@ -1,7 +1,4 @@
 ﻿using System.Net;
-using System.Text;
-using System.Web;
-using Microsoft.AspNetCore.Mvc;
 using ProfileService.Web.Dtos;
 using ProfileService.Web.Storage;
 
@@ -10,10 +7,14 @@ namespace ProfileService.Web.Services;
 public class ConversationService : IConversationService
 {
     private readonly IProfileStore _profileStore;
+    private readonly IConversationStore _conversationStore;
+    private readonly IMessageStore _messageStore;
 
-    public ConversationService(IProfileStore profileStore)
+    public ConversationService(IProfileStore profileStore, IConversationStore conversationStore, IMessageStore messageStore)
     {
         _profileStore = profileStore;
+        _conversationStore = conversationStore;
+        _messageStore = messageStore;
     }
     public MessageResponse GetMessages(List<Message> messages, string? continuationToken, string conversationId, int? limit, long lastseenmessagetime)
     {
@@ -24,18 +25,14 @@ public class ConversationService : IConversationService
                 new GetMessageResponse(message.text, message.senderUsername, message.unixTime)
             );
         }
-
+        
         var nextUri = "";
         if (continuationToken != null)
         {
             nextUri = $"/api/conversations/{conversationId}/messages";
             if (limit != null) nextUri += $"?limit={limit}";
-            if (continuationToken != null)
-            {
-                continuationToken = WebUtility.UrlEncode(continuationToken);
-                nextUri += $"&continuationToken={continuationToken}";
-            }
-
+            continuationToken = WebUtility.UrlEncode(continuationToken);
+            nextUri += $"&continuationToken={continuationToken}";
             if (lastseenmessagetime > 0) nextUri += $"&lastSeenMessageTime={lastseenmessagetime}";
         }
 
@@ -65,14 +62,64 @@ public class ConversationService : IConversationService
         if (continuationToken != null){
             nextUri = $"/api/conversations?username={username}";
             if (limit != null) nextUri += $"&limit={limit}";
-            if (continuationToken != null)
-            {
-                continuationToken = WebUtility.UrlEncode(continuationToken);
-                nextUri += $"&continuationToken={continuationToken}";
-            }
+            continuationToken = WebUtility.UrlEncode(continuationToken);
+            nextUri += $"&continuationToken={continuationToken}";
             if (lastSeenConversationTime > 0) nextUri += $"&lastSeenConversationTime={lastSeenConversationTime}";
         }
         var conversationResponse = new GetConversationResponse(conversationResponseList, nextUri);
         return conversationResponse;
+    }
+
+    public async Task<ConversationResponse> AddConversation(ConversationRequest conversation)
+    {
+        long time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                var conversationId = Guid.NewGuid();
+                var message = new Message(
+                    conversation.FirstMessage.Id,
+                    conversationId.ToString(),
+                    conversation.FirstMessage.SenderUsername,
+                    conversation.FirstMessage.Text,
+                    time
+                );
+                
+                var conversationdb = new Conversation(
+                    conversationId.ToString(),
+                    time,
+                    conversation.Participants
+                );
+                
+                var conversationresponse = new ConversationResponse(
+                    conversationId.ToString(),
+                    time
+                );
+                
+                await _conversationStore.AddConversation(conversationdb);
+                await _messageStore.AddMessage(message);
+                return conversationresponse;
+    }
+
+    public async Task<SendMessageResponse> AddMessage(SendMessageRequest message, string conversationId, Conversation existingConversation)
+    {
+        long time = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        var messageDb = new Message(
+            message.Id,
+            conversationId,
+            message.SenderUsername,
+            message.Text,
+            time
+        );
+
+        var messageresponse = new SendMessageResponse(
+            time
+        );
+        
+        var upsertConversation = new Conversation(
+            conversationId,
+            time,
+            existingConversation.participants
+        );
+        await _messageStore.AddMessage(messageDb);
+        await _conversationStore.AddConversation(upsertConversation);
+        return messageresponse;
     }
 }

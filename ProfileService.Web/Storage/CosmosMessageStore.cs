@@ -20,7 +20,8 @@ public class CosmosMessageStore : IMessageStore
         if (message == null ||
             string.IsNullOrWhiteSpace(message.senderUsername) ||
             string.IsNullOrWhiteSpace(message.text) ||
-            string.IsNullOrWhiteSpace(message.conversationId.ToString()) ||
+            string.IsNullOrWhiteSpace(message.conversationId) ||
+            string.IsNullOrWhiteSpace(message.messageId) ||
             message.unixTime == 0
            )
         {
@@ -87,7 +88,7 @@ public class CosmosMessageStore : IMessageStore
     private static MessageEntity ToEntity(Message message)
     {
         return new MessageEntity(
-            partitionKey: message.conversationId.ToString(),
+            partitionKey: message.conversationId,
             id: message.messageId,
             message.unixTime.ToString(),
             message.text,

@@ -26,11 +26,9 @@ public class ImageController : ControllerBase
         {
             var guid = Guid.NewGuid();
             BlobContainerClient blobContainerClient = new BlobContainerClient(_connectionString.ImageUploadStorage, "image");
-            string fileName = null;
             var requestFiles = Request.Form.Files;
             foreach (IFormFile file in requestFiles)
             {
-                fileName = file.FileName;
                 using (var stream = new MemoryStream())
                 {
                     await request.File.CopyToAsync(stream);
@@ -62,7 +60,6 @@ public class ImageController : ControllerBase
         {
             await blobClient.DownloadToAsync(stream);
             stream.Position = 0;
-            var contentType = (await blobClient.GetPropertiesAsync()).Value.ContentType;
             return new FileContentResult(stream.ToArray(), "image/png");
         }
     }

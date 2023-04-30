@@ -8,4 +8,8 @@ public interface IConversationService
 
     Task<GetConversationResponse> GetConversations(List<Conversation> conversations, string username, int? limit,
         string? continuationtoken, long lastSeenConversationTime);
+
+    Task<ConversationResponse> AddConversation(ConversationRequest conversation);
+    Task<SendMessageResponse> AddMessage(SendMessageRequest message, string conversationId, Conversation existingConversation);
+
 }

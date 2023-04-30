@@ -50,7 +50,7 @@ public class CosmosConversationStore : IConversationStore
             var queryResponse = await queryResultSetIterator.ReadNextAsync();
             foreach (var entity in queryResponse)
             {
-                var conversation = toConversation(entity);
+                var conversation = ToConversation(entity);
                 conversations.Add(conversation);
             }
             if (conversations.Count == pageSize)
@@ -80,7 +80,7 @@ public class CosmosConversationStore : IConversationStore
             return null;
         }
 
-        var conversation = toConversation(entity);
+        var conversation = ToConversation(entity);
         return conversation;
     }
 
@@ -115,12 +115,12 @@ public class CosmosConversationStore : IConversationStore
         );
     }
 
-    private static Conversation toConversation(ConversationEntity entity)
+    private static Conversation ToConversation(ConversationEntity entity)
     {
         return new Conversation(
             conversationId: new Guid(entity.id).ToString(),
             lastModified: long.Parse(entity.lastModified),
-            participants: new string[] { entity.participants[0], entity.participants[1] }
+            participants: new[] { entity.participants[0], entity.participants[1] }
         );
 
     }
