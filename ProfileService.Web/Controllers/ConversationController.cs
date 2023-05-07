@@ -39,9 +39,11 @@ public class ConversationController : ControllerBase
                 return Conflict($"A conversation between {existingProfile1.username} " +
                                 $"and {existingProfile2.username} already exists.");
         }
-
-        var conversationResponse = await _conversationService.AddConversation(conversation);
         
+       
+
+        //var conversationResponse = await _conversationService.AddConversation(conversation);
+        var conversationResponse =  await _conversationService.AddConversation(conversation);
         return CreatedAtAction(nameof(GetConversations), new { username = conversation.Participants[0] },
             conversationResponse);
     }
