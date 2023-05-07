@@ -18,35 +18,17 @@ public class ProfileController : ControllerBase
     }
 
     [HttpPost]
-    // public async Task<ActionResult<Profile>> AddProfile(Profile profile)
-    // {
-    //     var existingProfile = await _profileStore.GetProfile(profile.username);
-    //     if (existingProfile != null)
-    //     {
-    //         return Conflict($"A user with username {profile.username} already exists");
-    //     }
-    //     
-    //     await _profileStore.AddProfile(profile);
-    //     return CreatedAtAction(nameof(GetProfile), new { username = profile.username },
-    //         profile);
-    // }
     public async Task<ActionResult<Profile>> AddProfile(Profile profile)
     {
-        try
+        var existingProfile = await _profileStore.GetProfile(profile.username);
+        if (existingProfile != null)
         {
-            var existingProfile = await _profileStore.GetProfile(profile.username);
-            if (existingProfile != null)
-            {
-                return Conflict($"A user with username {profile.username} already exists");
-            }
-
-            await _profileStore.AddProfile(profile);
-            return CreatedAtAction(nameof(GetProfile), new { username = profile.username }, profile);
+            return Conflict($"A user with username {profile.username} already exists");
         }
-        catch (Exception ex)
-        {
-            return StatusCode(409, $"An error occurred: {ex.Message}");
-        }
+        
+        await _profileStore.AddProfile(profile);
+        return CreatedAtAction(nameof(GetProfile), new { username = profile.username },
+            profile);
     }
 
     
