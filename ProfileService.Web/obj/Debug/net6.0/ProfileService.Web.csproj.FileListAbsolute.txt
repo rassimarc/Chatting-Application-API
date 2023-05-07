@@ -258,3 +258,6 @@ C:/Users/moukh/Downloads/ProfileService_new (1)/ProfileService_new/ProfileServic
 /Users/macbookpro/Downloads/Lab/ProfileService.Web/obj/Debug/net6.0/ProfileService.Web.pdb
 /Users/macbookpro/Downloads/Lab/ProfileService.Web/obj/Debug/net6.0/ProfileService.Web.genruntimeconfig.cache
 /Users/macbookpro/Downloads/Lab/ProfileService.Web/obj/Debug/net6.0/ref/ProfileService.Web.dll
+/Users/macbookpro/Downloads/Lab/ProfileService.Web/bin/Debug/net6.0/Azure.Core.Amqp.dll
+/Users/macbookpro/Downloads/Lab/ProfileService.Web/bin/Debug/net6.0/Azure.Messaging.ServiceBus.dll
+/Users/macbookpro/Downloads/Lab/ProfileService.Web/bin/Debug/net6.0/Microsoft.Azure.Amqp.dll

@@ -122,4 +122,10 @@ public class ConversationService : IConversationService
         await _conversationStore.AddConversation(upsertConversation);
         return messageresponse;
     }
+
+    public Task<SendMessageResponse> AddMessageServiceBus(SendMessageServiceBus message)
+    {
+        return AddMessage(message.message, message.conversationId, message.existingConversation);
+    }
+
 }

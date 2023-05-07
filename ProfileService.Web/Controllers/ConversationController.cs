@@ -40,9 +40,11 @@ public class ConversationController : ControllerBase
                 return Conflict($"A conversation between {existingProfile1.username} " +
                                 $"and {existingProfile2.username} already exists.");
         }
-
-        var conversationResponse = await _conversationService.AddConversation(conversation);
         
+       
+
+        //var conversationResponse = await _conversationService.AddConversation(conversation);
+        var conversationResponse =  await _conversationService.AddConversation(conversation);
         return CreatedAtAction(nameof(GetConversations), new { username = conversation.Participants[0] },
             conversationResponse);
     }
@@ -62,7 +64,11 @@ public class ConversationController : ControllerBase
             if (messageId.messageId == message.Id) return Conflict($"A message with Id = {message.Id} already exists");
         }
 
-        var messageresponse = await _conversationService.AddMessage(message, conversationId, existingConversation);
+        //var messageresponse = await _conversationService.AddMessage(message, conversationId, existingConversation);
+        var messageservicebus = new SendMessageServiceBus(message, conversationId, existingConversation);
+        var messageresponse =   await _conversationService.AddMessageServiceBus(messageservicebus);
+
+
         return CreatedAtAction(nameof(GetConversations), new { username = message.SenderUsername },
             messageresponse);
     }

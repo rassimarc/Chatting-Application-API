@@ -17,18 +17,28 @@ public class CosmosProfileStore : IProfileStore
     private Container Container => _cosmosClient.GetDatabase("ContainerProfile").GetContainer("ContainerProfile");
     public async Task AddProfile(Profile profile)
     {
+        ValidateProfile(profile);
+        await Container.UpsertItemAsync(ToEntity(profile));
+    }
+
+    
+    private static void ValidateProfile(Profile profile)
+    {
         if (profile == null ||
             string.IsNullOrWhiteSpace(profile.username) ||
             string.IsNullOrWhiteSpace(profile.firstName) ||
-            string.IsNullOrWhiteSpace(profile.lastName) 
+            string.IsNullOrWhiteSpace(profile.lastName)
            )
         {
             throw new ArgumentException($"Invalid profile {profile}", nameof(profile));
         }
-
+    }
+    
+    public async Task UpsertProfile(Profile profile)
+    {
+        ValidateProfile(profile);
         await Container.UpsertItemAsync(ToEntity(profile));
     }
-
     public async Task<Profile?> GetProfile(string username)
     {
         try
@@ -98,59 +108,3 @@ public class CosmosProfileStore : IProfileStore
         );
     }
 }
-
-/*          In Memory Profile Store
-
-using ProfileService.Web.Controllers;
-using ProfileService.Web.Dtos;
-namespace ProfileService.Web.Storage;
-
-public class InMemoryProfileStore : IProfileStore
-{
-    private readonly Dictionary<string, Profile> _profiles = new();
-        
-    public Task UpsertProfile(Profile profile)
-    {
-        _profiles[profile.Username] = profile;
-        return Task.CompletedTask;
-    }
-
-    public Task<Profile?> GetProfile(string username)
-    {
-        if (!_profiles.ContainsKey(username)) return Task.FromResult<Profile?>(null);
-        return Task.FromResult<Profile?>(_profiles[username]);
-    }
-}
-*/
-
-/*                  In Memory Profile Store Tests
-using ProfileService.Web.Dtos;
-using ProfileService.Web.Storage;
-
-namespace ProfileService.Web.Tests.Storage;
-
-public class InMemoryProfileStoreTests
-{
-    private readonly InMemoryProfileStore _store = new();
-    
-    [Fact]
-    public async Task AddNewProfile()
-    {
-        var profile = new Profile(username: "foobar", firstName: "Foo", lastName: "Bar");
-        await _store.UpsertProfile(profile);
-        Assert.Equal(profile, await _store.GetProfile(profile.Username));
-    }
-    
-    [Fact]
-    public async Task UpdateExistingProfile()
-    {
-        var profile = new Profile(username: "foobar", firstName: "Foo", lastName: "Bar");
-        await _store.UpsertProfile(profile);
-
-        var updatedProfile = profile with { FirstName = "Foo1", LastName = "Foo2" };
-        await _store.UpsertProfile(updatedProfile);
-        
-        Assert.Equal(updatedProfile, await _store.GetProfile(profile.Username));
-    }
-}
-*/

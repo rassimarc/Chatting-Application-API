@@ -1,40 +1,29 @@
 using Microsoft.AspNetCore.Mvc;
 using ProfileService.Web.Dtos;
+using ProfileService.Web.Services;
 using ProfileService.Web.Storage;
 
 namespace ProfileService.Web.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class ProfileController : ControllerBase
 {
-    private readonly IProfileStore _profileStore;
+    private readonly IProfileService _profileService;
+    private readonly ILogger<ProfileController> _logger;
     private readonly IImageStore _imageStore;
 
-    public ProfileController(IProfileStore profileStore, IImageStore imageStore)
+    public ProfileController(IProfileService profileService, ILogger<ProfileController> logger, IImageStore imageStore)
     {
-        _profileStore = profileStore;
+        _profileService = profileService;
+        _logger = logger;
         _imageStore = imageStore;
     }
-
-    [HttpPost]
-    public async Task<ActionResult<Profile>> AddProfile(Profile profile)
-    {
-        var existingProfile = await _profileStore.GetProfile(profile.username);
-        if (existingProfile != null)
-        {
-            return Conflict($"A user with username {profile.username} already exists");
-        }
         
-        await _profileStore.AddProfile(profile);
-        return CreatedAtAction(nameof(GetProfile), new { username = profile.username },
-            profile);
-    }
-    
     [HttpGet("{username}")]
     public async Task<ActionResult<Profile>> GetProfile(string username)
     {
-        var profile = await _profileStore.GetProfile(username);
+        var profile = await _profileService.GetProfile(username);
         if (profile == null)
         {
             return NotFound($"A User with username {username} was not found");
@@ -43,10 +32,23 @@ public class ProfileController : ControllerBase
         return Ok(profile);
     }
 
+    [HttpPost]
+    public async Task<ActionResult<Profile>> AddProfile(Profile profile)
+    {
+        using (_logger.BeginScope("{Username}", profile.username))
+        {
+            _logger.LogInformation("Creating Profile for user {ProfileUsername}", profile.username);
+            await _profileService.EnqueueCreateProfile(profile);
+
+            return CreatedAtAction(nameof(GetProfile), new { username = profile.username },
+                profile);
+        }
+    }
+
     [HttpPut("{username}")]
     public async Task<ActionResult<Profile>> UpdateProfile(string username, PutProfileRequest request)
     {
-        var existingProfile = await _profileStore.GetProfile(username);
+        var existingProfile = await _profileService.GetProfile(username);
         if (existingProfile == null)
         {
             return NotFound($"A User with username {username} was not found");
@@ -64,7 +66,9 @@ public class ProfileController : ControllerBase
 
         
         var profile = new Profile(username, request.firstName, request.lastName, request.ProfilePictureId.ToString());
-        await _profileStore.AddProfile(profile);
+        await _profileService.UpdateProfile(profile);
+
+        _logger.LogInformation("Updated Profile for {Username}", profile.username);
         return Ok(profile);
     }
 }
