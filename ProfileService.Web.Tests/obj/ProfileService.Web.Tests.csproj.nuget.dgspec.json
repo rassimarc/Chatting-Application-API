@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\moukh\\RiderProjects\\Lab\\ProfileService.Web.Tests\\ProfileService.Web.Tests.csproj": {}
+    "/Users/macbookpro/Downloads/Lab/ProfileService.Web.Tests/ProfileService.Web.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\moukh\\RiderProjects\\Lab\\ProfileService.Web.Tests\\ProfileService.Web.Tests.csproj": {
+    "/Users/macbookpro/Downloads/Lab/ProfileService.Web.Tests/ProfileService.Web.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\moukh\\RiderProjects\\Lab\\ProfileService.Web.Tests\\ProfileService.Web.Tests.csproj",
+        "projectUniqueName": "/Users/macbookpro/Downloads/Lab/ProfileService.Web.Tests/ProfileService.Web.Tests.csproj",
         "projectName": "ProfileService.Web.Tests",
-        "projectPath": "C:\\Users\\moukh\\RiderProjects\\Lab\\ProfileService.Web.Tests\\ProfileService.Web.Tests.csproj",
-        "packagesPath": "C:\\Users\\moukh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\moukh\\RiderProjects\\Lab\\ProfileService.Web.Tests\\obj\\",
+        "projectPath": "/Users/macbookpro/Downloads/Lab/ProfileService.Web.Tests/ProfileService.Web.Tests.csproj",
+        "packagesPath": "/Users/macbookpro/.nuget/packages/",
+        "outputPath": "/Users/macbookpro/Downloads/Lab/ProfileService.Web.Tests/obj/",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\moukh\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/macbookpro/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -26,8 +29,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\moukh\\RiderProjects\\Lab\\ProfileService.Web\\ProfileService.Web.csproj": {
-                "projectPath": "C:\\Users\\moukh\\RiderProjects\\Lab\\ProfileService.Web\\ProfileService.Web.csproj"
+              "/Users/macbookpro/Downloads/Lab/ProfileService.Web/ProfileService.Web.csproj": {
+                "projectPath": "/Users/macbookpro/Downloads/Lab/ProfileService.Web/ProfileService.Web.csproj"
               }
             }
           }
@@ -89,15 +92,11 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.14, 6.0.14]"
+              "version": "[6.0.12, 6.0.12]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.14, 6.0.14]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.14, 6.0.14]"
+              "version": "[6.0.12, 6.0.12]"
             }
           ],
           "frameworkReferences": {
@@ -105,21 +104,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.101/RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\moukh\\RiderProjects\\Lab\\ProfileService.Web\\ProfileService.Web.csproj": {
+    "/Users/macbookpro/Downloads/Lab/ProfileService.Web/ProfileService.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\moukh\\RiderProjects\\Lab\\ProfileService.Web\\ProfileService.Web.csproj",
+        "projectUniqueName": "/Users/macbookpro/Downloads/Lab/ProfileService.Web/ProfileService.Web.csproj",
         "projectName": "ProfileService.Web",
-        "projectPath": "C:\\Users\\moukh\\RiderProjects\\Lab\\ProfileService.Web\\ProfileService.Web.csproj",
-        "packagesPath": "C:\\Users\\moukh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\moukh\\RiderProjects\\Lab\\ProfileService.Web\\obj\\",
+        "projectPath": "/Users/macbookpro/Downloads/Lab/ProfileService.Web/ProfileService.Web.csproj",
+        "packagesPath": "/Users/macbookpro/.nuget/packages/",
+        "outputPath": "/Users/macbookpro/Downloads/Lab/ProfileService.Web/obj/",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\moukh\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/macbookpro/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -170,19 +172,15 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.14, 6.0.14]"
+              "version": "[6.0.12, 6.0.12]"
             },
             {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[6.0.14, 6.0.14]"
+              "name": "Microsoft.NETCore.App.Host.osx-x64",
+              "version": "[6.0.12, 6.0.12]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.14, 6.0.14]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.14, 6.0.14]"
+              "version": "[6.0.12, 6.0.12]"
             }
           ],
           "frameworkReferences": {
@@ -193,7 +191,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.101/RuntimeIdentifierGraph.json"
         }
       }
     }

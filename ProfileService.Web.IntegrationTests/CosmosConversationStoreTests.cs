@@ -18,7 +18,7 @@ public class CosmosConversationStoreTest : IClassFixture<WebApplicationFactory<P
     );
     
     private readonly Profile _profile2 = new Profile(
-        username: "FooBar1",
+        username: "FooBar2",
         firstName: "Foo2",
         lastName: "Bar2",
         ProfilePictureId: Guid.NewGuid().ToString()
@@ -27,7 +27,7 @@ public class CosmosConversationStoreTest : IClassFixture<WebApplicationFactory<P
     public readonly Conversation _conversation = new Conversation(
         conversationId: Guid.NewGuid().ToString(),
         lastModified: DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
-        participants: new[] { "FooBar1", "FooBar1"}
+        participants: new[] { "FooBar1", "FooBar2"}
     );
 
     
@@ -52,7 +52,12 @@ public class CosmosConversationStoreTest : IClassFixture<WebApplicationFactory<P
     public async Task AddConversation()
     {
         await _store.AddConversation(_conversation);
-        Assert.Equal(_conversation, await _store.GetConversation(_conversation.participants[0], _conversation.conversationId));
+
+        var retrievedConversation = await _store.GetConversation(_conversation.participants[0], _conversation.conversationId);
+
+        Assert.Equal(_conversation.conversationId, retrievedConversation.conversationId);
+        Assert.Equal(_conversation.lastModified, retrievedConversation.lastModified);
+        Assert.Equal(_conversation.participants, retrievedConversation.participants);
     }
 
     [Fact]

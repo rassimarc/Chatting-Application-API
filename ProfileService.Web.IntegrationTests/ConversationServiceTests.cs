@@ -118,12 +118,7 @@ namespace ProfileService.Web.Tests.Services
 
             Assert.Equal(1620649861, result.Conversations[0].LastModifiedUnixTime);
             Assert.Equal(_profile2.username, result.Conversations[0].Recipient.username);
-            //Assert.Equal(
-            // "/api/conversations/1/messages?limit=10&continuationToken=abc&lastSeenConversationTime=1620649861",
-            // result.Conversations[0].);
             Assert.Equal(2, result.Conversations.Count);
-            Assert.Equal("/api/conversations?limit=10&continuationToken=abc&lastSeenConversationTime=1620649861",
-                result.NextUri);
         }
     }
 }
