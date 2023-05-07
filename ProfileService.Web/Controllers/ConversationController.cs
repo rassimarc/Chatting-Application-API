@@ -55,7 +55,7 @@ public class ConversationController : ControllerBase
         var existingMessages = (await _messageStore.GetMessages(null, null, conversationId, "0")).messages;
 
         if (existingProfile == null) return NotFound($"A user with username {message.SenderUsername} doesn't exist");
-        if (existingConversation == null) return Conflict($"A Conversation with conversationId {conversationId} doesn't exist");
+        if (existingConversation == null) return NotFound($"A Conversation with conversationId {conversationId} doesn't exist");
         if (message.Text.Length == 0) return BadRequest("Invalid message, please try again.");
         foreach (var messageId in existingMessages)
         {
