@@ -13,7 +13,6 @@ namespace ProfileService.Web.Tests.Controllers;
 public class ProfileControllerTests : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly Mock<IProfileStore> _profileStoreMock = new();
-    private readonly Mock<IImageStore> _imageStoreMock = new();
     private readonly HttpClient _httpClient;
 
     public ProfileControllerTests(WebApplicationFactory<Program> factory)
@@ -21,28 +20,22 @@ public class ProfileControllerTests : IClassFixture<WebApplicationFactory<Progra
         // DRY: Don't repeat yourself
         _httpClient = factory.WithWebHostBuilder(builder =>
         {
-            builder.ConfigureTestServices(services => { services.AddSingleton(_profileStoreMock.Object); services.AddSingleton(_imageStoreMock.Object); });
+            builder.ConfigureTestServices(services => { services.AddSingleton(_profileStoreMock.Object); });
         }).CreateClient();
     }
-    
-    
-    private readonly Profile _profile = new(
-        username: "FooBar",
-        firstName: "Foo",
-        lastName: "Bar",
-        ProfilePictureId: Guid.NewGuid().ToString()
-    );
 
     [Fact]
     public async Task GetProfile()
     {
-        
-        _profileStoreMock.Setup(m => m.GetProfile(_profile.username))
-            .ReturnsAsync(_profile);
-        var response = await _httpClient.GetAsync($"/Profile/{_profile.username}");
+        var profilePictureId = Guid.NewGuid().ToString();
+        var profile = new Profile("foobar", "Foo", "Bar", profilePictureId);
+        _profileStoreMock.Setup(m => m.GetProfile(profile.username))
+            .ReturnsAsync(profile);
+
+        var response = await _httpClient.GetAsync($"/api/Profile/{profile.username}");
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         var json = await response.Content.ReadAsStringAsync();
-        Assert.Equal(_profile, JsonConvert.DeserializeObject<Profile>(json));
+        Assert.Equal(profile, JsonConvert.DeserializeObject<Profile>(json));
     }
 
     [Fact]
@@ -50,125 +43,109 @@ public class ProfileControllerTests : IClassFixture<WebApplicationFactory<Progra
     {
         _profileStoreMock.Setup(m => m.GetProfile("foobar"))
             .ReturnsAsync((Profile?)null);
-        var response = await _httpClient.GetAsync($"/Profile/foobar");
+
+        var response = await _httpClient.GetAsync($"/api/Profile/foobar");
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 
     [Fact]
-    public async Task AddProfile_ImageNotExist()
+    public async Task AddProfile()
     {
-        var response = await _httpClient.PostAsync("/Profile",
-            new StringContent(JsonConvert.SerializeObject(_profile), Encoding.Default, "application/json"));
-
-        _profileStoreMock.Setup(m => m.GetProfile(_profile.username))
-            .ReturnsAsync((Profile?)null);
-        _profileStoreMock.Setup(x => x.AddProfile(It.IsAny<Profile>())).Returns(Task.CompletedTask);
-
-        _imageStoreMock.Setup(m => m.GetImage(_profile.ProfilePictureId.ToString()))
-            .ReturnsAsync((Image?)null);
-
-        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        var profilePictureId = Guid.NewGuid().ToString();
+        var profile = new Profile("foobar", "Foo", "Bar", profilePictureId);
+        var response = await _httpClient.PostAsync("/api/Profile",
+            new StringContent(JsonConvert.SerializeObject(profile), Encoding.Default, "application/json"));
         
-        _profileStoreMock.Verify(x => x.GetProfile(_profile.username), Times.Once);
-        _profileStoreMock.Verify(x => x.AddProfile(It.Is<Profile>(p => p.username == _profile.username && p.firstName == _profile.firstName && p.lastName == _profile.lastName && p.ProfilePictureId == "3f7c9a85-1825-499f-92fb-c46882afbea2")), Times.Once);
+        Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+        Assert.Equal("http://localhost/api/Profile/foobar", response.Headers.GetValues("Location").First());
         
+        _profileStoreMock.Verify(mock => mock.AddProfile(profile), Times.Once);
     }
 
     [Fact]
     public async Task AddProfile_Conflict()
     {
-        _profileStoreMock.Setup(m => m.GetProfile(_profile.username))
-            .ReturnsAsync(_profile);
+        var profilePictureId = Guid.NewGuid().ToString();
+        var profile = new Profile("foobar", "Foo", "Bar", profilePictureId);
+        _profileStoreMock.Setup(m => m.GetProfile(profile.username))
+            .ReturnsAsync(profile);
 
-        var response = await _httpClient.PostAsync("/Profile",
-            new StringContent(JsonConvert.SerializeObject(_profile), Encoding.Default, "application/json"));
+        var response = await _httpClient.PostAsync("/api/Profile",
+            new StringContent(JsonConvert.SerializeObject(profile), Encoding.Default, "application/json"));
         Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
         
-        _profileStoreMock.Verify(m => m.AddProfile(_profile), Times.Never);
+        _profileStoreMock.Verify(m => m.AddProfile(profile), Times.Never);
     }
 
     [Theory]
-    [InlineData(null, "Foo", "Bar","{3f7c9a85-1825-499f-92fb-c46882afbea2}" )]
-    [InlineData("", "Foo", "Bar", "{3f7c9a85-1825-499f-92fb-c46882afbea2}")]
-    [InlineData(" ", "Foo", "Bar", "{3f7c9a85-1825-499f-92fb-c46882afbea2}")]
-    [InlineData("foobar", null, "Bar", "{3f7c9a85-1825-499f-92fb-c46882afbea2}")]
-    [InlineData("foobar", "", "Bar", "{3f7c9a85-1825-499f-92fb-c46882afbea2}")]
-    [InlineData("foobar", "   ", "Bar", "{3f7c9a85-1825-499f-92fb-c46882afbea2}")]
-    [InlineData("foobar", "Foo", "", "{3fa85f64-5717-4562-b3fc-2c963f66afa6}")]
-    [InlineData("foobar", "Foo", " ", "{3f7c9a85-1825-499f-92fb-c46882afbea2}")]
-    public async Task AddProfile_InvalidArgs(string username, string firstName, string lastName, string profilePictureId)
+    [InlineData(null, "Foo", "Bar")]
+    [InlineData("", "Foo", "Bar")]
+    [InlineData(" ", "Foo", "Bar")]
+    [InlineData("foobar", null, "Bar")]
+    [InlineData("foobar", "", "Bar")]
+    [InlineData("foobar", "   ", "Bar")]
+    [InlineData("foobar", "Foo", "")]
+    [InlineData("foobar", "Foo", null)]
+    [InlineData("foobar", "Foo", " ")]
+    public async Task AddProfile_InvalidArgs(string username, string firstName, string lastName)
     {
-        var profile = new Profile(username, firstName, lastName, profilePictureId);
-        var response = await _httpClient.PostAsync("/Profile",
+        var profile = new Profile(username, firstName, lastName, "");
+        var response = await _httpClient.PostAsync("/api/Profile",
             new StringContent(JsonConvert.SerializeObject(profile), Encoding.Default, "application/json"));
-    
+
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         _profileStoreMock.Verify(mock => mock.AddProfile(profile), Times.Never);
     }
+
+    [Fact]
+    public async Task UpdateProfile()
+    {
+        var profile = new Profile("foobar", "Foo", "Bar", "");
+        _profileStoreMock.Setup(m => m.GetProfile(profile.username))
+            .ReturnsAsync(profile);
+        
+
+        var updatedProfile = profile with { firstName = "Foo2" };
+
+        var response = await _httpClient.PutAsync($"/api/Profile/{profile.username}",
+            new StringContent(JsonConvert.SerializeObject(updatedProfile), Encoding.Default, "application/json"));
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        _profileStoreMock.Verify(mock => mock.AddProfile(updatedProfile));
+    }
     
     [Fact]
-    public async Task AddProfile_InvalidArgsGuid ()
+    public async Task UpdateProfile_NotFound()
     {
-        var updatedProfile = _profile with {ProfilePictureId = ""};
-        var response = await _httpClient.PostAsync("/Profile",
-            new StringContent(JsonConvert.SerializeObject(updatedProfile), Encoding.Default, "application/json"));
-    
-        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
-        _profileStoreMock.Verify(mock => mock.AddProfile(updatedProfile), Times.Never);
-    }
+        var profile = new Profile("foobar", "Foo", "Bar", "");
 
-    // [Fact]
-    // public async Task UpdateProfile()
-    // {
-    //     _profileStoreMock.Setup(m => m.GetProfile(_profile.username))
-    //         .ReturnsAsync(_profile);
-    //
-    //     var updatedProfile = _profile with { firstName = "Foo2" };
-    //
-    //     var response = await _httpClient.PutAsync($"/Profile/{_profile.username}",
-    //         new StringContent(JsonConvert.SerializeObject(updatedProfile), Encoding.Default, "application/json"));
-    //     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-    //     _profileStoreMock.Verify(mock => mock.UpsertProfile(updatedProfile));
-    // }
-    //
-    // [Fact]
-    // public async Task UpdateProfile_NotFound()
-    // {
-    //     _profileStoreMock.Setup(m => m.GetProfile(_profile.username))
-    //         .ReturnsAsync((Profile?)null);
-    //
-    //     var updatedProfile = _profile with { firstName = "Foo2" };
-    //
-    //     var response = await _httpClient.PutAsync($"/Profile/{_profile.username}",
-    //         new StringContent(JsonConvert.SerializeObject(updatedProfile), Encoding.Default, "application/json"));
-    //     Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
-    //     _profileStoreMock.Verify(mock => mock.UpsertProfile(updatedProfile), Times.Never);
-    // }
-    //
-    //
-    // [Theory]
-    // [InlineData(null, "Foo", "Bar","{3f7c9a85-1825-499f-92fb-c46882afbea2}" )]
-    // [InlineData("", "Foo", "Bar", "{3f7c9a85-1825-499f-92fb-c46882afbea2}")]
-    // [InlineData(" ", "Foo", "Bar", "{3f7c9a85-1825-499f-92fb-c46882afbea2}")]
-    // [InlineData("foobar", null, "Bar", "{3f7c9a85-1825-499f-92fb-c46882afbea2}")]
-    // [InlineData("foobar", "", "Bar", "{3f7c9a85-1825-499f-92fb-c46882afbea2}")]
-    // [InlineData("foobar", "   ", "Bar", "{3f7c9a85-1825-499f-92fb-c46882afbea2}")]
-    // [InlineData("foobar", "Foo", "", "{3f7c9a85-1825-499f-92fb-c46882afbea2}")]
-    // [InlineData("foobar", "Foo", null, "")]
-    // [InlineData("foobar", "Foo", " ", "{3f7c9a85-1825-499f-92fb-c46882afbea2}")]
-    // public async Task UpdateProfile_InvalidArgs(string username, string firstName, string lastName, Guid profilePictureId)
-    // {
-    //  
-    //     _profileStoreMock.Setup(m => m.GetProfile(_profile.username))
-    //         .ReturnsAsync(_profile);
-    //     
-    //     var updatedProfile = _profile with {username = username, firstName = firstName, lastName = lastName, ProfilePictureId = profilePictureId};
-    //
-    //     var response = await _httpClient.PutAsync($"/Profile/{_profile.username}",
-    //         new StringContent(JsonConvert.SerializeObject(updatedProfile), Encoding.Default, "application/json"));
-    //     
-    //     Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-    //     _profileStoreMock.Verify(mock => mock.UpsertProfile(updatedProfile), Times.Never);
-    //     
-    // }
+        _profileStoreMock.Setup(m => m.GetProfile("foobar"))
+            .ReturnsAsync((Profile?)null);
+        
+        var response = await _httpClient.PutAsync($"/api/Profile/{profile.username}",
+            new StringContent(JsonConvert.SerializeObject(profile), Encoding.Default, "application/json"));
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        _profileStoreMock.Verify(mock => mock.AddProfile(profile), times: Times.Exactly(0));
+    }
+    
+    [Theory]
+    [InlineData("foobar", null, "Bar")]
+    [InlineData("foobar", "", "Bar")]
+    [InlineData("foobar", "   ", "Bar")]
+    [InlineData("foobar", "Foo", "")]
+    [InlineData("foobar", "Foo", null)]
+    [InlineData("foobar", "Foo", " ")]
+    public async Task UpdateProfile_InvalidArgs(string username, string firstName, string lastName)
+    {
+        var profile = new Profile("foobar", "Foo", "Bar", "");
+        _profileStoreMock.Setup(m => m.GetProfile(profile.username))
+            .ReturnsAsync(profile);
+        
+
+        var updatedProfile = new Profile(username, firstName, lastName, "");
+
+        var response = await _httpClient.PutAsync($"/api/Profile/{profile.username}",
+            new StringContent(JsonConvert.SerializeObject(updatedProfile), Encoding.Default, "application/json"));
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        _profileStoreMock.Verify(mock => mock.AddProfile(updatedProfile), times: Times.Exactly(0));
+    }
 }

@@ -63,17 +63,12 @@ namespace ProfileService.Web.Tests.Controllers
                 )
             );
 
-
             _profileStoreMock
-                .Setup(x => x.GetProfile("user1"))
+                .Setup(x => x.GetProfile(_profile1.username))
                 .ReturnsAsync(_profile1);
             _profileStoreMock
-                .Setup(x => x.GetProfile("user2"))
+                .Setup(x => x.GetProfile(_profile2.username))
                 .ReturnsAsync(_profile2);
-
-            // _conversationStoreMock
-            //     .Setup(x => x.GetConversations("user1", null, null, "0"))
-            //     .ReturnsAsync(new ConversationResponse();
 
             // Act
             var result = await _controller.AddConversation(conversation);
@@ -81,12 +76,13 @@ namespace ProfileService.Web.Tests.Controllers
             // Assert
             Assert.IsType<CreatedAtActionResult>(result.Result);
             var conversationResponse = Assert.IsType<ConversationResponse>(result.Value);
-            //Assert.NotEmpty(conversationResponse.ConversationId);
-            //Assert.NotEqual(default, conversationResponse.Timestamp);
+            Assert.NotEmpty(conversationResponse.Id);
+            Assert.NotEqual(default, conversationResponse.CreatedUnixTime);
 
             _conversationStoreMock.Verify(x => x.AddConversation(It.IsAny<Conversation>()), Times.Once);
             _messageStoreMock.Verify(x => x.AddMessage(It.IsAny<Message>()), Times.Once);
         }
+
 
         [Fact]
         public async Task AddConversation_InvalidParticipants_ReturnsBadRequest()

@@ -24,6 +24,7 @@ public class ConversationController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<ConversationResponse>> AddConversation(ConversationRequest conversation)
     {
+        if (conversation.Participants.Length != 2) return BadRequest("There should be 2 participants");
         var existingProfile1 = await _profileStore.GetProfile(conversation.Participants[0]);
         var existingProfile2 = await _profileStore.GetProfile(conversation.Participants[1]);
         var conversations = (await _conversationStore.GetConversations(conversation.Participants[0], null, null, "0")).conversations;

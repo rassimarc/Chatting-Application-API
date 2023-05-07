@@ -52,12 +52,16 @@ public class ProfileController : ControllerBase
             return NotFound($"A User with username {username} was not found");
         }
 
-        var existingImage = await _imageStore.GetImage(request.ProfilePictureId.ToString());
-
-        if (existingImage == null)
+        if (!string.IsNullOrWhiteSpace(request.ProfilePictureId))
         {
-            return NotFound("The image you are trying to upload cannot be found. Please try uploading it again.");
+            var existingImage = await _imageStore.GetImage(request.ProfilePictureId);
+    
+            if (existingImage == null)
+            {
+                return NotFound("The image you are trying to upload cannot be found. Please try uploading it again.");
+            }
         }
+
         
         var profile = new Profile(username, request.firstName, request.lastName, request.ProfilePictureId.ToString());
         await _profileStore.AddProfile(profile);
