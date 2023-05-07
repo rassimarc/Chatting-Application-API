@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/ProfileService.Web.props" />
+</Project>
