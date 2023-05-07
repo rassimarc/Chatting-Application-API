@@ -45,8 +45,7 @@ public class ProfileController : ControllerBase
         }
         catch (Exception ex)
         {
-            // Handle the exception here
-            return StatusCode(500, $"An error occurred: {ex.Message}");
+            return StatusCode(409, $"An error occurred: {ex.Message}");
         }
     }
 
