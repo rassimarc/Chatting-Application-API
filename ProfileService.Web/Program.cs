@@ -1,3 +1,4 @@
+using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Options;
 using ProfileService.Web.Configuration;
@@ -16,6 +17,7 @@ builder.Services.AddSwaggerGen();
 // Add Configuration
 builder.Services.Configure<CosmosSettings>(builder.Configuration.GetSection("Cosmos"));
 builder.Services.Configure<ConnectionStrings>(builder.Configuration.GetSection("ConnectionStrings"));
+builder.Services.Configure<ServiceBusSettings>(builder.Configuration.GetSection("ServiceBus"));
 
 
 // Add Services
@@ -32,6 +34,17 @@ builder.Services.AddSingleton(sp =>
     var cosmosOptions = sp.GetRequiredService<IOptions<CosmosSettings>>();
     return new CosmosClient(cosmosOptions.Value.ConnectionString);
 });
+
+builder.Services.AddSingleton(sp =>
+{
+    var serviceBusOptions = sp.GetRequiredService<IOptions<ServiceBusSettings>>();
+    return new ServiceBusClient(serviceBusOptions.Value.ConnectionString);
+});
+
+builder.Services.AddSingleton<IProfileService, ProfileService.Web.Services.ProfileService>();
+builder.Services.AddSingleton<ICreateProfilePublisher, CreateProfileServiceBusPublisher>();
+builder.Services.AddSingleton<IProfileSerializer, JsonProfileSerializer>();    
+builder.Services.AddHostedService<CreateProfileHostedService>();
 
 
 var app = builder.Build();
