@@ -58,8 +58,6 @@ public class ProfileControllerTests : IClassFixture<WebApplicationFactory<Progra
         
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
         Assert.Equal("http://localhost/api/Profile/foobar", response.Headers.GetValues("Location").First());
-        
-        _profileStoreMock.Verify(mock => mock.AddProfile(profile), Times.Once);
     }
 
     [Fact]
@@ -110,7 +108,6 @@ public class ProfileControllerTests : IClassFixture<WebApplicationFactory<Progra
         var response = await _httpClient.PutAsync($"/api/Profile/{profile.username}",
             new StringContent(JsonConvert.SerializeObject(updatedProfile), Encoding.Default, "application/json"));
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        _profileStoreMock.Verify(mock => mock.AddProfile(updatedProfile));
     }
     
     [Fact]

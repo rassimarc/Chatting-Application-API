@@ -6,7 +6,7 @@ using ProfileService.Web.Storage;
 namespace ProfileService.Web.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class ProfileController : ControllerBase
 {
     private readonly IProfileService _profileService;
@@ -37,6 +37,11 @@ public class ProfileController : ControllerBase
     {
         using (_logger.BeginScope("{Username}", profile.username))
         {
+            var existingProfile = await _profileService.GetProfile(profile.username);
+            if (existingProfile != null)
+            {
+                return Conflict($"A user with username {profile.username} already exists");
+            }
             _logger.LogInformation("Creating Profile for user {ProfileUsername}", profile.username);
             await _profileService.EnqueueCreateProfile(profile);
 

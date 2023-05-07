@@ -338,7 +338,7 @@
           "ProfileService.Web.IntegrationTests.dll": {}
         }
       },
-      "Azure.Core/1.28.0": {
+      "Azure.Core/1.30.0": {
         "dependencies": {
           "Microsoft.Bcl.AsyncInterfaces": "1.1.1",
           "System.Diagnostics.DiagnosticSource": "6.0.0",
@@ -350,12 +350,46 @@
         },
         "runtime": {
           "lib/net6.0/Azure.Core.dll": {
-            "assemblyVersion": "1.28.0.0",
-            "fileVersion": "1.2800.23.10602"
+            "assemblyVersion": "1.30.0.0",
+            "fileVersion": "1.3000.23.16003"
           }
         },
         "compile": {
           "lib/net6.0/Azure.Core.dll": {}
+        }
+      },
+      "Azure.Core.Amqp/1.3.0": {
+        "dependencies": {
+          "Microsoft.Azure.Amqp": "2.6.1",
+          "System.Memory": "4.5.4",
+          "System.Memory.Data": "1.0.2"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Azure.Core.Amqp.dll": {
+            "assemblyVersion": "1.3.0.0",
+            "fileVersion": "1.300.23.15207"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Azure.Core.Amqp.dll": {}
+        }
+      },
+      "Azure.Messaging.ServiceBus/7.13.1": {
+        "dependencies": {
+          "Azure.Core": "1.30.0",
+          "Azure.Core.Amqp": "1.3.0",
+          "Microsoft.Azure.Amqp": "2.6.1",
+          "Microsoft.Bcl.AsyncInterfaces": "1.1.1",
+          "System.Memory.Data": "1.0.2"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Azure.Messaging.ServiceBus.dll": {
+            "assemblyVersion": "7.13.1.0",
+            "fileVersion": "7.1300.123.16402"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Azure.Messaging.ServiceBus.dll": {}
         }
       },
       "Azure.Storage.Blobs/12.15.0": {
@@ -375,7 +409,7 @@
       },
       "Azure.Storage.Common/12.14.0": {
         "dependencies": {
-          "Azure.Core": "1.28.0",
+          "Azure.Core": "1.30.0",
           "System.IO.Hashing": "6.0.0"
         },
         "runtime": {
@@ -433,9 +467,20 @@
           "lib/net6.0/Microsoft.AspNetCore.TestHost.dll": {}
         }
       },
+      "Microsoft.Azure.Amqp/2.6.1": {
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Azure.Amqp.dll": {
+            "assemblyVersion": "2.4.0.0",
+            "fileVersion": "2.2.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.Azure.Amqp.dll": {}
+        }
+      },
       "Microsoft.Azure.Cosmos/3.31.2": {
         "dependencies": {
-          "Azure.Core": "1.28.0",
+          "Azure.Core": "1.30.0",
           "Microsoft.Bcl.AsyncInterfaces": "1.1.1",
           "Microsoft.Bcl.HashCode": "1.1.0",
           "Newtonsoft.Json": "10.0.2",
@@ -470,27 +515,27 @@
           "runtimes/win-x64/native/Cosmos.CRTCompat.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "2.0.0.0"
           },
           "runtimes/win-x64/native/Microsoft.Azure.Cosmos.ServiceInterop.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "2.14.0.0"
           },
           "runtimes/win-x64/native/msvcp140.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "14.30.30704.0"
           },
           "runtimes/win-x64/native/vcruntime140.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "14.30.30704.0"
           },
           "runtimes/win-x64/native/vcruntime140_1.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "14.30.30704.0"
           }
         },
         "compile": {
@@ -2074,7 +2119,7 @@
         "runtime": {
           "lib/netstandard2.0/xunit.abstractions.dll": {
             "assemblyVersion": "2.0.0.0",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "2.0.0.0"
           }
         },
         "compile": {
@@ -2135,6 +2180,7 @@
       "xunit.runner.visualstudio/2.4.3": {},
       "ProfileService.Web/1.0.0": {
         "dependencies": {
+          "Azure.Messaging.ServiceBus": "7.13.1",
           "Azure.Storage.Blobs": "12.15.0",
           "Microsoft.Azure.Cosmos": "3.31.2",
           "Swashbuckle.AspNetCore": "6.2.3"
@@ -3882,12 +3928,26 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Azure.Core/1.28.0": {
+    "Azure.Core/1.30.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-IY6rGo8r8MfcmIxaNGFhIn/5PTz2Eld6Uqmy3bL/NX+2+g7hroo69jcJ9jeRPkuKXZPPreXTr8zt49No11Wbug==",
-      "path": "azure.core/1.28.0",
-      "hashPath": "azure.core.1.28.0.nupkg.sha512"
+      "sha512": "sha512-w5Z2uTASP+EsnG4kqQsYtKTf41x1czIu1CgPuDQdHILxCk+IP2DiXazUcfTqr6kebi7S6ah927mrQx1nT/4bnw==",
+      "path": "azure.core/1.30.0",
+      "hashPath": "azure.core.1.30.0.nupkg.sha512"
+    },
+    "Azure.Core.Amqp/1.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6GG4gyFkAuHtpBVkvj0wE5+lCM+ttsZlIWAipBkI+jlCUlTgrTiNUROBFnb8xuKoymVDw9Tf1W8RoKqgbd71lg==",
+      "path": "azure.core.amqp/1.3.0",
+      "hashPath": "azure.core.amqp.1.3.0.nupkg.sha512"
+    },
+    "Azure.Messaging.ServiceBus/7.13.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-kkTAoppWEbu+xVncpRyNhYLs6mEMv/A0YOpOm6Fh3XvDDd/TBd2c8vha8D+kPzn8mI+A7EOlI/giIDgCSCo7Ww==",
+      "path": "azure.messaging.servicebus/7.13.1",
+      "hashPath": "azure.messaging.servicebus.7.13.1.nupkg.sha512"
     },
     "Azure.Storage.Blobs/12.15.0": {
       "type": "package",
@@ -3930,6 +3990,13 @@
       "sha512": "sha512-8vBf6F2TWvUCqHTOsODuNNKtdJ0xQvrrtniCADPUC2olAznASDRl27UktrGuEkkfosS254pWHU//+8Gc5daKdA==",
       "path": "microsoft.aspnetcore.testhost/6.0.13",
       "hashPath": "microsoft.aspnetcore.testhost.6.0.13.nupkg.sha512"
+    },
+    "Microsoft.Azure.Amqp/2.6.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-yWnawf7MD/PUNzvLcVkWN0s4kQT3+CUy4sP19CmBnyFX5Uy/CCRC0M6Amkl1p8bn9yht1oSLu+m8d6nc9DLJoA==",
+      "path": "microsoft.azure.amqp/2.6.1",
+      "hashPath": "microsoft.azure.amqp.2.6.1.nupkg.sha512"
     },
     "Microsoft.Azure.Cosmos/3.31.2": {
       "type": "package",
