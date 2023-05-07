@@ -1,12 +1,9 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Moq;
 using ProfileService.Web.Dtos;
 using ProfileService.Web.Services;
 using ProfileService.Web.Storage;
-using Xunit;
 
-namespace ProfileService.Web.Tests.Services
+namespace ProfileService.Web.IntegrationTests
 {
     public class ConversationServiceTests
     {
