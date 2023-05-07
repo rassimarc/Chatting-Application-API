@@ -24,6 +24,7 @@ public class ConversationController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<ConversationResponse>> AddConversation(ConversationRequest conversation)
     {
+        if (conversation.Participants.Length != 2) return BadRequest("There should be 2 participants");
         var existingProfile1 = await _profileStore.GetProfile(conversation.Participants[0]);
         var existingProfile2 = await _profileStore.GetProfile(conversation.Participants[1]);
         var conversations = (await _conversationStore.GetConversations(conversation.Participants[0], null, null, "0")).conversations;
@@ -56,7 +57,7 @@ public class ConversationController : ControllerBase
         var existingMessages = (await _messageStore.GetMessages(null, null, conversationId, "0")).messages;
 
         if (existingProfile == null) return NotFound($"A user with username {message.SenderUsername} doesn't exist");
-        if (existingConversation == null) return Conflict($"A Conversation with conversationId {conversationId} doesn't exist");
+        if (existingConversation == null) return NotFound($"A Conversation with conversationId {conversationId} doesn't exist");
         if (message.Text.Length == 0) return BadRequest("Invalid message, please try again.");
         foreach (var messageId in existingMessages)
         {

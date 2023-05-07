@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "sm0p8ixF4D9akMOJx8g+JsETB/JWp0RLFOQXvjubKgM=",
+  "Source": "ProfileService.Web",
+  "BasePath": "_content/ProfileService.Web",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

@@ -873,3 +873,5 @@
 /Users/macbookpro/Downloads/Lab/ProfileService.Web.IntegrationTests/obj/Debug/net6.0/ProfileService.Web.IntegrationTests.pdb
 /Users/macbookpro/Downloads/Lab/ProfileService.Web.IntegrationTests/obj/Debug/net6.0/ProfileService.Web.IntegrationTests.genruntimeconfig.cache
 /Users/macbookpro/Downloads/Lab/ProfileService.Web.IntegrationTests/obj/Debug/net6.0/ref/ProfileService.Web.IntegrationTests.dll
+/Users/macbookpro/Downloads/Lab/ProfileService.Web.IntegrationTests/bin/Debug/net6.0/Castle.Core.dll
+/Users/macbookpro/Downloads/Lab/ProfileService.Web.IntegrationTests/bin/Debug/net6.0/Moq.dll

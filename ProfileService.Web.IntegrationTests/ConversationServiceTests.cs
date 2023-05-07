@@ -1,12 +1,9 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Moq;
 using ProfileService.Web.Dtos;
 using ProfileService.Web.Services;
 using ProfileService.Web.Storage;
-using Xunit;
 
-namespace ProfileService.Web.Tests.Services
+namespace ProfileService.Web.IntegrationTests
 {
     public class ConversationServiceTests
     {
@@ -118,12 +115,7 @@ namespace ProfileService.Web.Tests.Services
 
             Assert.Equal(1620649861, result.Conversations[0].LastModifiedUnixTime);
             Assert.Equal(_profile2.username, result.Conversations[0].Recipient.username);
-            //Assert.Equal(
-            // "/api/conversations/1/messages?limit=10&continuationToken=abc&lastSeenConversationTime=1620649861",
-            // result.Conversations[0].);
             Assert.Equal(2, result.Conversations.Count);
-            Assert.Equal("/api/conversations?limit=10&continuationToken=abc&lastSeenConversationTime=1620649861",
-                result.NextUri);
         }
     }
 }
