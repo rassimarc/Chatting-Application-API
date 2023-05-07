@@ -63,7 +63,11 @@ public class ConversationController : ControllerBase
             if (messageId.messageId == message.Id) return Conflict($"A message with Id = {message.Id} already exists");
         }
 
-        var messageresponse = await _conversationService.AddMessage(message, conversationId, existingConversation);
+        //var messageresponse = await _conversationService.AddMessage(message, conversationId, existingConversation);
+        var messageservicebus = new SendMessageServiceBus(message, conversationId, existingConversation);
+        var messageresponse =   await _conversationService.AddMessageServiceBus(messageservicebus);
+
+
         return CreatedAtAction(nameof(GetConversations), new { username = message.SenderUsername },
             messageresponse);
     }
