@@ -68,7 +68,6 @@ public class ProfileController : ControllerBase
                 return NotFound("The image you are trying to upload cannot be found. Please try uploading it again.");
             }
         }
-
         
         var profile = new Profile(username, request.firstName, request.lastName, request.ProfilePictureId.ToString());
         await _profileService.UpdateProfile(profile);

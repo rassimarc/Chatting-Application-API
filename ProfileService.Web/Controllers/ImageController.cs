@@ -13,16 +13,22 @@ public class ImageController : ControllerBase
 {
     private readonly ConnectionStrings _connectionString;
     private readonly IImageStore _imageStore;
+    private readonly ILogger<ImageController> _logger;
 
-    public ImageController(IImageStore imageStore, IOptions<ConnectionStrings> connectionStrings)
+
+    public ImageController(IImageStore imageStore, ILogger<ImageController> logger, IOptions<ConnectionStrings> connectionStrings)
     {
         _imageStore = imageStore;
         _connectionString = connectionStrings.Value;
+        _logger = logger;
+
     }
 
     [HttpPost]
     public async Task<ActionResult<UploadImageResponse>> UploadImage([FromForm] UploadImageRequest request)
     {
+        using (_logger.BeginScope("{uploadImage}", request))
+
         {
             var guid = Guid.NewGuid();
             BlobContainerClient blobContainerClient = new BlobContainerClient(_connectionString.ImageUploadStorage, "image");
